@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -5,19 +7,19 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.Map;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class KafkaProcessor {
     private static final MovingAverage movingAverage = new MovingAverage(14);
     private static final ExponentialMovingAverage exponentialMovingAverage = new ExponentialMovingAverage(0.5); // alpha is 0.5
     private static final RSI rsi = new RSI(14);
-
+    private static final Gson gson = new Gson();
+    private static final Map<String, StockIndicators> indicatorsMap = new HashMap<>();
     public static void main(String[] args) {
         // Set up Kafka consumer configuration
         Properties consumerProps = new Properties();
@@ -42,20 +44,66 @@ public class KafkaProcessor {
                 // Parse the data
                 Map<String, Object> data = parseData(record.value());
 
-                // Update the indicators
-                double closingPrice = (double) data.get("closing_price");
-                movingAverage.add(closingPrice);
-                exponentialMovingAverage.add(closingPrice);
-                rsi.add(closingPrice);
+                // Check the data type
+                String dataType = (String) data.get("data_type");
+                if (dataType != null) {
+                    // Forward the additional data without processing
+                    forwardDataToPython(data);
+                } else {
+                    // Get the stock symbol
+                    String stockSymbol = (String) data.get("stock_symbol");
 
-                // Forward the received data and the indicator values to another Python application
-                Map<String, Object> forwardData = new HashMap<>(data);
-                forwardData.put("moving_average", movingAverage.getAverage());
-                forwardData.put("exponential_moving_average", exponentialMovingAverage.getAverage());
-                forwardData.put("rsi", rsi.getRSI());
-                forwardDataToPython(forwardData);
+                    // Get the indicators for this stock symbol
+                    StockIndicators indicators = indicatorsMap.get(stockSymbol);
+                    if (indicators == null) {
+                        indicators = new StockIndicators();
+                        indicatorsMap.put(stockSymbol, indicators);
+                    }
+
+                    // Update the indicators
+                    double closingPrice = (double) data.get("closing_price");
+                    indicators.getMovingAverage().add(closingPrice);
+                    indicators.getExponentialMovingAverage().add(closingPrice);
+                    indicators.getRsi().add(closingPrice);
+
+                    // Forward the received data and the indicator values to another Python application
+                    Map<String, Object> forwardData = new HashMap<>(data);
+                    forwardData.put("moving_average", indicators.getMovingAverage().getAverage());
+                    forwardData.put("exponential_moving_average", indicators.getExponentialMovingAverage().getAverage());
+                    forwardData.put("rsi", indicators.getRsi().getRSI());
+                    forwardDataToPython(forwardData);
+                }
             }
         }
+    }
+
+    static class StockIndicators {
+        private final MovingAverage movingAverage = new MovingAverage(14);
+        private final ExponentialMovingAverage exponentialMovingAverage = new ExponentialMovingAverage(0.5); // alpha is 0.5
+        private final RSI rsi = new RSI(14);
+
+        public MovingAverage getMovingAverage() {
+            return movingAverage;
+        }
+
+        public ExponentialMovingAverage getExponentialMovingAverage() {
+            return exponentialMovingAverage;
+        }
+
+        public RSI getRsi() {
+            return rsi;
+        }
+    }
+
+
+
+    private static Map<String, Object> parseData(String jsonData) {
+        Type type = new TypeToken<Map<String, Object>>(){}.getType();
+        return gson.fromJson(jsonData, type);
+    }
+
+    private static String convertToJson(Map<String, Object> data) {
+        return gson.toJson(data);
     }
 
     private static void forwardDataToPython(Map<String, Object> data) {
@@ -69,7 +117,7 @@ public class KafkaProcessor {
         Producer<String, String> producer = new KafkaProducer<>(producerProps);
 
         // Define the topic to which the data will be sent
-        String topic = "signal_data";
+        String topic = "Processed_data";
 
         // Convert the data to JSON
         String jsonData = convertToJson(data);
@@ -87,15 +135,5 @@ public class KafkaProcessor {
 
         // Close the producer
         producer.close();
-    }
-
-    private static Map<String, Object> parseData(String jsonData) {
-        // TODO: Implement this method to convert the JSON string into a Map
-        return null;
-    }
-
-    private static String convertToJson(Map<String, Object> data) {
-        // TODO: Implement this method to convert a Map into a JSON string
-        return null;
     }
 }

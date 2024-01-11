@@ -23,7 +23,6 @@ def ingest_data():
 
     # Forward the data to Kafka
     forward_data_to_kafka(data)
-    print(data)
 
     return jsonify({"message": "Data received successfully"}), 200
 
