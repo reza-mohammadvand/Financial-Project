@@ -1,0 +1,135 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e2f;
+    color: #939393;
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main .header{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #939393;
+    font-size: 48px;
+    text-shadow: 0px 0px 3px #939393;
+    margin-bottom: 20px;
+}
+.main .header i{
+    margin-right: 140px;
+    font-size: 25px;
+    color: #939393;
+    text-shadow: none!important;
+}
+
+.main #tabs{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+}
+.main .search  {
+    position: relative;
+    width: 100%;
+    margin-bottom: 65px;
+}
+.main .search input {
+    border-radius: 50px;
+    left: 0;
+    transition: all .3s ease-in-out;
+    width: 88%;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    height: 30px;
+    padding: 4px 16px;
+    position: absolute;
+}
+.main .search input:focus {
+    border: 1px solid #ccc;
+    outline: none;
+}
+.main .search button {
+    color: #fff;
+    background: #303458;
+    border-radius: 50%;
+    height: 34px;
+    right: 3px;
+    top: 3px;
+    transition: all .3s ease-in-out;
+    width: 34px;
+    border: none;
+    font-size: 13px;
+    padding: 4px;
+    position: absolute;
+    text-align: center;
+}
+.main #tabs ul{
+    left: 50px;
+    position: fixed;
+    margin-top: 0;
+    padding: 25px;
+    list-style: none;
+    width: 14%;
+    background-color: #27293d;
+    border-radius: 15px;
+    box-shadow: 0px 0px 19px #141414;
+    margin-right: 60px ;
+}
+.main #tabs ul hr{
+background: #fff;
+width: 100%;
+color: #fff;
+height: 1px;
+margin: 20px 0;
+}
+.main #tabs ul li{
+    width: 100%;
+    font-size: 21px;
+    margin: 10px 0;
+    padding: 5px;
+    background-color: transparent;
+    border-radius: 10px;
+    transition: 0.3s linear;
+}
+.main #tabs ul li:hover{
+    background-color: #ffffff1f;
+}
+.main #tabs ul li:hover a{
+    color: #fff;
+}
+.main #tabs ul a{
+    transition: 0.3s linear;
+    margin-left:10px ;
+    text-decoration: none;
+    color: #939393;
+    font-weight: bold;
+    padding: 10px 0;
+    display: block;
+    width: 100%;
+}
+
+.ui-tabs-active{
+    background-color: #e91e63!important;
+}
+.ui-tabs-active a{ 
+    color: #fff!important;
+    
+}
+
+div.ui-tabs-panel{
+    width: 77%;
+    padding: 25px;
+    list-style: none;
+    background-color: #27293d;
+    border-radius: 15px;
+    box-shadow: 0px 0px 19px #141414;
+    margin-left: 370px;
+}

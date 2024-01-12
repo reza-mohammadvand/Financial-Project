@@ -16,13 +16,16 @@ def generate_signal(data):
         exponential_moving_average = data.get('exponential_moving_average')
 
         # Generate a signal based on the RSI
-        rsi_signal = 'Buy' if rsi < 30 else 'Sell' if rsi > 70 else 'Neutral'
+        rsi_signal = 'Buy' if rsi < 40 else 'Sell' if rsi > 70 else 'Neutral'
+        data["rsi_signal"] = rsi_signal
 
         # Generate a signal based on the moving average
         ma_signal = 'Buy' if moving_average < data.get('closing_price') else 'Sell' if moving_average > data.get('closing_price') else 'Neutral'
+        data["ma_signal"] = ma_signal
 
         # Generate a signal based on the exponential moving average
         ema_signal = 'Buy' if exponential_moving_average < data.get('closing_price') else 'Sell' if exponential_moving_average > data.get('closing_price') else 'Neutral'
+        data["ema_signal"] = ema_signal
 
         # Count the number of buy and sell signals
         signals = [rsi_signal, ma_signal, ema_signal]
@@ -36,6 +39,8 @@ def generate_signal(data):
             signal = 'Sell'
         else:
             signal = 'Neutral'
+        
+        data["final_signal"] = signal
 
         return f'Signals for {stock_symbol}: RSI ({rsi}) signal is {rsi_signal}, Moving Average ({moving_average}) signal is {ma_signal}, Exponential Moving Average ({exponential_moving_average}) signal is {ema_signal}. Final signal is {signal}.'
 
@@ -46,10 +51,14 @@ def generate_signal(data):
 
         # Generate a signal based on the sentiment score
         if sentiment_score > 0.5:
+            data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: News sentiment is positive ({sentiment_score})'
+            
         elif sentiment_score < -0.5:
+            data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: News sentiment is negative ({sentiment_score})'
         else:
+            data["final_signal"] = "Neutral"
             return f'Neutral signal for {stock_symbol}: News sentiment is neutral ({sentiment_score})'
 
     elif data_type == 'economic_indicator':
@@ -58,11 +67,14 @@ def generate_signal(data):
         value = data.get('value')
 
         # Generate a signal based on the economic indicator
-        if indicator_name == 'GDP Growth Rate' and value > 0:
+        if indicator_name == 'GDP Growth Rate' and value > 2:
+            data["final_signal"] = "Buy"
             return f'Buy signal: {indicator_name} is positive ({value})'
-        elif indicator_name == 'GDP Growth Rate' and value < 0:
+        elif indicator_name == 'GDP Growth Rate' and value < -2:
+            data["final_signal"] = "Sell"
             return f'Sell signal: {indicator_name} is negative ({value})'
         else:
+            data["final_signal"] = "Neutral"
             return f'Neutral signal: {indicator_name} is neutral ({value})'
 
     elif data_type == 'order_book':
@@ -72,8 +84,10 @@ def generate_signal(data):
 
         # Generate a signal based on the order type
         if order_type == 'buy':
+            data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: Order book shows a buy order'
         elif order_type == 'sell':
+            data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: Order book shows a sell order'
 
     elif data_type == 'market_data':
@@ -83,11 +97,14 @@ def generate_signal(data):
         pe_ratio = data.get('pe_ratio')
 
         # Generate a signal based on the market cap and P/E ratio
-        if market_cap > 1e11 and pe_ratio < 20:
+        if market_cap > 1e11 and pe_ratio < 15:
+            data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: High market cap ({market_cap}) and low P/E ratio ({pe_ratio})'
-        elif market_cap < 1e10 or pe_ratio > 30:
+        elif market_cap < 1e10 or pe_ratio > 20:
+            data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: Low market cap ({market_cap}) or high P/E ratio ({pe_ratio})'
         else:
+            data["final_signal"] = "Neutral"
             return f'Neutral signal for {stock_symbol}: Market cap ({market_cap}) and P/E ratio ({pe_ratio}) are moderate'
 
     else:
