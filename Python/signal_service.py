@@ -1,5 +1,8 @@
 from confluent_kafka import Consumer
 import json
+import asyncio
+import websockets
+
 
 def generate_signal(data):
     # Check the data type
@@ -106,22 +109,32 @@ topic = 'Processed_data'
 consumer.subscribe([topic])
 
 # Continuously consume messages from Kafka and print them out
-while True:
-     msg = consumer.poll(1.0)
+async def time(websocket, path):
+    while True:
+        msg = consumer.poll(1.0)
 
-     if msg is None:
-         continue
-     if msg.error():
-         print("Consumer error: {}".format(msg.error()))
-         continue
+        if msg is None:
+            continue
+        if msg.error():
+            print("Consumer error: {}".format(msg.error()))
+            continue
 
-     # Parse the data
-     data = json.loads(msg.value().decode('utf-8'))
+        # Parse the data
+        data = json.loads(msg.value().decode('utf-8'))
 
-     # Generate a signal based on the data
-     signal = generate_signal(data)
+        # Generate a signal based on the data
+        signal = generate_signal(data)
 
-     # Print the signal
-     print(signal)
+        # Print the signal
+        print(signal)
+
+        # Send the data to the client
+        await websocket.send(json.dumps(data))
+        await asyncio.sleep(1)
+
+start_server = websockets.serve(time, "localhost", 5678)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
 
 consumer.close()
