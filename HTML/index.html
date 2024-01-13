@@ -1,4 +1,14 @@
-<!-- <script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <!-- <script>
     var ws = new WebSocket("ws://localhost:5678/"),
         messages = document.createElement('ul');
     ws.onmessage = function (event) {
@@ -10,24 +20,15 @@
     };
     document.body.appendChild(messages);
 </script> -->
-
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Signal Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </head>
 <body>
   <div class="main">
     <div class="header">      
       <p style="font-size: 35px; margin-top: 55px; margin-left: 122px;" >Dashboard</p>
       <p>Signaling system</p>
-      <i class="fa fa-bell"></i>
+      <i id="bell-icon" class="fa fa-bell"></i>
+      <p id="notification-count">0</p>
+      <dev id="clock"></dev>
     </div>
     <div id="tabs">
       <ul>
@@ -35,29 +36,94 @@
           <input type="text" name="search" placeholder="search">
           <button type="submit" class="btn btn-search fa fa-search"></button>
         </div>
-        <li><a href="#tabs-1">Signals</a></li>
-        <li><a href="#tabs-2">News</a></li>
+        <li><a href="#tabs-1"><span class="logo"><i class="fa fa-rocket" aria-hidden="true"></i></span>Signals</a></li>
+        <li><a href="#tabs-2"><span class="logo"><i class="fa fa-volume-up" aria-hidden="true"></i></span>News</a></li>
         <p style="text-align: center; margin-top: 22px; color:#fff; font-size: 30px;">Symbols</p>
         <hr></hr>
-        <li><a href="#tabs-3">Aenean lacinia</a></li>
+        <li><a href="#tabs-3"><span class="logo"><img src="img/apple.svg"></span>AAPL</a></li>
+        <li><a href="#tabs-4"><span class="logo"><img src="img/alphabet.svg"></span>GOOGL</a></li>
+        <li><a href="#tabs-5"><span class="logo"><img src="img/amazon.svg"></span>AMZN</a></li>
+        <li><a href="#tabs-6"><span class="logo"><img src="img/microsoft.svg"></span>MSFT</a></li>
+        <li><a href="#tabs-7"><span class="logo"><img src="img/tesla.svg"></span>TSLA</a></li>
       </ul>
       <div id="tabs-1">
-        <h2>Content heading 1</h2>
-        <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+        <div class="accordion js-accordion">
+          <div class="titles">
+            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 160px">Signal</p><p style="margin-left: 64px">Close Price</p><p style="margin-left: 93px">Time</p></div>
+            <hr></hr>
+          </div>
+          <div class="accordion__item js-accordion-item">
+            <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal"></p>Buy<p class="close_price">1000.254</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
+          <div class="accordion-body js-accordion-body">
+            <div class="accordion-body__contents">
+              <div><p>Moving Average : </p><p>MA Signal :</p></div>
+              <div><p>Exponential Moving Average : </p><p>EMA Signal :</p></div>
+              <div><p>RSI : </p><p>RSI Signal : </p></div>
+              <div><p>Low Price : </p><p>Volume : </p></div>
+              <div><p>Hight Price : </p><p>Low Price : </p></div>
+            </div>
+            </div>
+            </div>
+        </div>
       </div>
       <div id="tabs-2">
-        <h2>Content heading 2</h2>
-        <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+        <div class="accordion js-accordion">
+          <div class="titles">
+            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 160px">Signal</p><p style="margin-left: 100px">Type</p><p style="margin-left: 130px">Time</p></div>
+            <hr></hr>
+          </div>
+          <div class="accordion__item js-accordion-item">
+            <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal"></p>Buy<p class="close_price">Order Book</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
+          <div class="accordion-body js-accordion-body">
+            <div class="accordion-body__contents">
+              <div><p>Price Order : </p><p>Quantity :</p></div>
+            </div>
+            </div>
+            </div>
+            <div class="accordion__item js-accordion-item">
+              <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal"></p>Buy<p class="close_price">News Sentiment</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
+            <div class="accordion-body js-accordion-body">
+              <div class="accordion-body__contents">
+                <div><p>Sentiment Score : </p><p>Sentiment Magnitude :</p></div>
+              </div>
+              </div>
+              </div>
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal"></p>Buy<p class="close_price">Market Data</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
+              <div class="accordion-body js-accordion-body">
+                <div class="accordion-body__contents">
+                  <div><p>Market Cap : </p><p>P/E Ratio :</p></div>
+                </div>
+                </div>
+                </div>
+                <div class="accordion__item js-accordion-item">
+                  <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">General</p><p class="Signal"></p>Buy<p class="close_price">economic_indicator</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
+                <div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+                    <div><p>Indicator Name : </p><p>Value :</p></div>
+                  </div>
+                  </div>
+                  </div>
+        </div>
       </div>
       <div id="tabs-3">
-        <h2>Content heading 3</h2>
-        <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-        <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+      </div>
+      <div id="tabs-4">
+      </div>
+      <div id="tabs-5">
+      </div>
+      <div id="tabs-6">
+      </div>
+      <div id="tabs-7">
       </div>
     </div>
   </div>
 
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/dropdown.js"></script>
 </body>
 </html>
 

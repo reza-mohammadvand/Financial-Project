@@ -48,13 +48,14 @@ def generate_signal(data):
         # Get the stock symbol and sentiment score
         stock_symbol = data.get('stock_symbol')
         sentiment_score = data.get('sentiment_score')
+        sentiment_magnitude = data.get('sentiment_magnitude')
 
         # Generate a signal based on the sentiment score
-        if sentiment_score > 0.5:
+        if sentiment_score > 0.5 and sentiment_magnitude > 0.5:
             data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: News sentiment is positive ({sentiment_score})'
             
-        elif sentiment_score < -0.5:
+        elif sentiment_score < -0.5 and sentiment_magnitude > 0.5:
             data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: News sentiment is negative ({sentiment_score})'
         else:
@@ -81,12 +82,14 @@ def generate_signal(data):
         # Get the order type
         order_type = data.get('order_type')
         stock_symbol = data.get('stock_symbol')
+        quantity = data.get('quantity')
+        price = data.get('price')
 
         # Generate a signal based on the order type
-        if order_type == 'buy':
+        if order_type == 'buy' and quantity > 50 and price > 500:
             data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: Order book shows a buy order'
-        elif order_type == 'sell':
+        elif order_type == 'sell' and quantity > 50 and price < 500:
             data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: Order book shows a sell order'
 
@@ -100,7 +103,7 @@ def generate_signal(data):
         if market_cap > 1e11 and pe_ratio < 15:
             data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: High market cap ({market_cap}) and low P/E ratio ({pe_ratio})'
-        elif market_cap < 1e10 or pe_ratio > 20:
+        elif market_cap < 1e10 or pe_ratio > 25:
             data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: Low market cap ({market_cap}) or high P/E ratio ({pe_ratio})'
         else:
