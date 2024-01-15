@@ -1,3 +1,4 @@
+
 // main tabs
 $( function() {
     $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
@@ -164,9 +165,10 @@ $(document).ready(function() {
 
 
 
-var numDataPoints = 10; // The number of data points
+var numDataPoints = 15; // The number of data points
 var pointWidth = 80; // The width of each data point in px
 document.getElementById('myChart').width = numDataPoints * pointWidth;
+
 
 
 const myChart = new Chart("myChart", {
@@ -216,11 +218,18 @@ const myChart = new Chart("myChart", {
           return afterBody;
         }
       }
+    },
+    plugins: {
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: 'x'
+        },
+        zoom: {
+          enabled: true,
+          mode: 'x'
+        }
+      }
     }
   }
-  
-
 });
-
-
-

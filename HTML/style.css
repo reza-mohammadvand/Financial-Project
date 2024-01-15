@@ -250,11 +250,10 @@ html,body{
     transition: 0.3s linear;
 }
 .main #tabs>ul li .logo img {
-    margin-bottom: -5px;
+    margin:-7px 13px -5px 0;
     width: 25px;
     height: 25px;
     border-radius: 15px;
-    margin-right: 13px;
 }
 .main #tabs>ul li .logo i {
         margin-bottom: -7px;
@@ -476,9 +475,21 @@ div.ui-tabs-panel{
     overflow-x: scroll;
   }
   
+  #chartWrapper{
+    margin: 0px 0 90px -100px;
+  }
 
+#chartWrapper::-webkit-scrollbar {
+    padding: 2px;
+    border-radius: 10px;
+    width: 5px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-
-
+#chartWrapper::-webkit-scrollbar-thumb {
+    border-radius: 18px;
+    background: rgb(72 72 72);
+}
 
   
