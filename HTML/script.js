@@ -207,16 +207,16 @@ const myChart = new Chart("myChart", {
           label += tooltipItem.yLabel;
           return label;
         },
-        afterBody: function(tooltipItems, data) {
-          var tooltipItem = tooltipItems[0];
-          var afterBody = [];
-          var dataPoint = data.datasets[0].data[tooltipItem.index]; // Always refer to the first dataset
-          afterBody.push('Open: ' + dataPoint.open);
-          afterBody.push('High: ' + dataPoint.high);
-          afterBody.push('Low: ' + dataPoint.low);
-          afterBody.push('Volume: ' + dataPoint.volume);
-          return afterBody;
-        }
+        // afterBody: function(tooltipItems, data) {
+        //   var tooltipItem = tooltipItems[0];
+        //   var afterBody = [];
+        //   var dataPoint = data.datasets[0].data[tooltipItem.index]; // Always refer to the first dataset
+        //   afterBody.push('Open: ' + dataPoint.open);
+        //   afterBody.push('High: ' + dataPoint.high);
+        //   afterBody.push('Low: ' + dataPoint.low);
+        //   afterBody.push('Volume: ' + dataPoint.volume);
+        //   return afterBody;
+        // }
       }
     },
     plugins: {
@@ -233,3 +233,11 @@ const myChart = new Chart("myChart", {
     }
   }
 });
+
+
+// go to end of chart
+window.onload = function() {
+  var element = document.getElementById("chartWrapper");
+  element.scrollLeft = element.scrollWidth;
+}
+

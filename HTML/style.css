@@ -448,33 +448,6 @@ div.ui-tabs-panel{
   }
 
 
-  .chartWrapper {
-    position: relative;
-  }
-  
-  .chartWrapper > canvas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-  }
-  
-  .chartWrapper {
-    position: relative;
-  }
-  
-  .chartWrapper > canvas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-  }
-  
-  .chartAreaWrapper {
-    width: 800px; /* Adjust this value according to your needs */
-    overflow-x: scroll;
-  }
-  
   #chartWrapper{
     margin: 0px 0 90px -100px;
   }
