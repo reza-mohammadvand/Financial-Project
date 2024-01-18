@@ -163,6 +163,9 @@ $(document).ready(function() {
 
 
 
+var volumeData = [5070, 5072, 5069, 5073, 5075,7500, 5072, 5069, 5073, 7055, 5075, 5075, 5075, 5072, 5069, 5073, 5075,7500, 5072, 5069, 5073, 7055, 5075, 5075,]; // This will be populated with your volume data
+var total = volumeData.reduce((a, b) => a + b, 0);
+var average = total / volumeData.length;
 
 
 var numDataPoints = 15; // The number of data points
@@ -172,29 +175,65 @@ document.getElementById('myChart').width = numDataPoints * pointWidth;
 
 
 const myChart = new Chart("myChart", {
-  type: "line",
+  type: "bar",
   data: {
-    labels: ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05"], // This will be populated with your time data
+    labels: ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05"], // This will be populated with your time data
     datasets: [{
       label: 'price',
-      data: [120.1, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75], // This will be populated with your price data
-      borderColor: 'rgba(75,192,192,1)'
+      data: [120.1, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75], // This will be populated with your price data
+      borderColor: 'rgba(75,192,192,1)',
+      type: 'line'
     }, {
       label: 'MA',
-      data: [120.1, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75], // This will be populated with your moving average data
-      borderColor: 'rgba(192,75,192,1)'
+      data: [120.1, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75], // This will be populated with your moving average data
+      borderColor: 'rgba(192,75,192,1)',
+      type: 'line'
     }, {
       label: 'EMA',
-      data: [120.1, 120.93, 120.48, 121.27, 122.07,120.1, 120.93, 120.48, 121.27, 122.07, 123.5, 75, 75], // This will be populated with your EMA data
-      borderColor: 'rgba(192,192,75,1)'
+      data: [120.1, 120.93, 120.48, 121.27, 122.07,120.1, 120.93, 120.48, 121.27, 122.07, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75], // This will be populated with your EMA data
+      borderColor: 'rgba(192,192,75,1)',
+      type: 'line'
     }, {
       label: 'RSI',
-      data: [70, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75], // This will be populated with your RSI data
-      borderColor: 'rgba(75,75,192,1)'
-    }]
+      data: [70, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75], // This will be populated with your RSI data
+      borderColor: 'rgba(75,75,192,1)',
+      type: 'line'
+    },{
+      label: 'Volume',
+      data: volumeData, // This will be populated with your volume data
+      type: 'bar',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      yAxisID: 'y-axis-volume',
+      order: 1,
+      barPercentage: 0.3
+    }
+  ]
   },
   options: {
     responsive: false,
+    scales: {
+      yAxes: [{
+        type: 'linear',
+        display: true,
+        position: 'right',
+        id: 'y-axis-1',
+      }, 
+      {
+        id: 'y-axis-volume',
+        type: 'linear',
+        display: false,
+        position: 'right',
+        gridLines: {
+          drawOnChartArea: false
+        },
+
+        ticks: {
+          min: average / 2, // half the average
+          max: average * 4, // forth the average
+        }
+      }   
+    ],
+    },
     tooltips: {
       mode: 'index',
       intersect: false,
@@ -230,9 +269,47 @@ const myChart = new Chart("myChart", {
           mode: 'x'
         }
       }
-    }
+    },
+    legend: {
+      display: false // Hide the default legend
+    },
   }
 });
+
+// Generate a custom legend
+var ul = document.getElementById("chart-legend");
+myChart.data.datasets.forEach((dataset, i) => {
+  var li = document.createElement("li");
+  li.style.color = dataset.borderColor;
+  li.textContent = dataset.label;
+  li.onclick = function(e) {
+    var hidden = !myChart.getDatasetMeta(i).hidden;
+    myChart.getDatasetMeta(i).hidden = hidden;
+    li.style.textDecoration = hidden ? "line-through" : "";
+    myChart.update();
+  };
+  ul.appendChild(li);
+});
+
+
+
+
+// Add Item
+function addData(chart, label, priceData, maData, emaData, rsiData, volumeData) {
+  chart.data.labels.push(label);
+  chart.data.datasets[0].data.push(priceData);
+  chart.data.datasets[1].data.push(maData);
+  chart.data.datasets[2].data.push(emaData);
+  chart.data.datasets[3].data.push(rsiData);
+  chart.data.datasets[4].data.push(volumeData);
+  chart.update();
+}
+
+
+
+addData(myChart, "2024-01-06", 1024.7, 1201.92, 1022.57, 76, 5000);
+
+
 
 
 // go to end of chart
@@ -240,4 +317,8 @@ window.onload = function() {
   var element = document.getElementById("chartWrapper");
   element.scrollLeft = element.scrollWidth;
 }
+
+
+
+
 

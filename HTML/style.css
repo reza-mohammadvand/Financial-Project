@@ -448,9 +448,9 @@ div.ui-tabs-panel{
   }
 
 
-  #chartWrapper{
+#chartWrapper{
     margin: 0px 0 90px -100px;
-  }
+}
 
 #chartWrapper::-webkit-scrollbar {
     padding: 2px;
@@ -464,5 +464,18 @@ div.ui-tabs-panel{
     border-radius: 18px;
     background: rgb(72 72 72);
 }
-
-  
+#legendWrapper{
+    position: absolute;
+    top: 15px;
+    left: -115px;
+}
+#legendWrapper ul{
+display: flex;
+flex-direction: column;
+}
+#legendWrapper ul li{
+    cursor: pointer;
+    font-size: 19px;
+    margin:2px 30px;
+    width: fit-content;
+}
