@@ -448,11 +448,11 @@ div.ui-tabs-panel{
   }
 
 
-#chartWrapper{
+.chartWrapper{
     margin: 0px 0 90px -100px;
 }
 
-#chartWrapper::-webkit-scrollbar {
+.chartWrapper::-webkit-scrollbar {
     padding: 2px;
     border-radius: 10px;
     width: 5px;
@@ -460,22 +460,43 @@ div.ui-tabs-panel{
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-#chartWrapper::-webkit-scrollbar-thumb {
+.chartWrapper::-webkit-scrollbar-thumb {
     border-radius: 18px;
     background: rgb(72 72 72);
 }
-#legendWrapper{
+.legendWrapper{
     position: absolute;
     top: 15px;
     left: -115px;
 }
-#legendWrapper ul{
+.legendWrapper ul{
 display: flex;
 flex-direction: column;
 }
-#legendWrapper ul li{
+.legendWrapper ul li{
     cursor: pointer;
     font-size: 19px;
     margin:2px 30px;
     width: fit-content;
+}
+
+#chartWrappersmall {
+    flex-wrap: wrap;
+    border-radius: 15px;
+    box-shadow: 0px 10px 19px #141414;
+    padding: 50px;
+    width: 85%;
+    display: flex;
+    justify-content: space-around;
+    margin: 50px 0 100px 53px;
+}
+
+#chartWrappersmall canvas{
+margin-top: 20px;
+}
+
+
+#chartWrappersmall .title{
+    display: block;
+    margin: 8px 0px -14px 11px ;
 }

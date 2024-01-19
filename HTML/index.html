@@ -50,7 +50,25 @@
       </ul>
       <div id="tabs-1">
         <div class="tab-title">Signaling system</div>
-        <div class="accordion js-accordion">
+        <div id="chartWrappersmall">
+          <div> 
+          <p class="title">AAPL</p>
+          <canvas id="AAPLsmallChart" style="width: 500px; height: 230px;"></canvas>
+        </div>
+          <div> <p class="title">GOOG</p>
+          <canvas id="GOOGLsmallChart" style="width: 500px; height: 230px;"></canvas>
+        </div>
+          <div> <p class="title">AMZN</p>
+          <canvas id="AMZNsmallChart" style="width: 500px; height: 230px;"></canvas>
+        </div>
+          <div> <p class="title">MSFT</p>
+          <canvas id="MSFTsmallChart" style="width: 500px; height: 230px;"></canvas>
+        </div>
+          <div> <p class="title">TSLA</p>
+          <canvas id="TSLAsmallChart" style="width: 500px; height: 230px;"></canvas>
+        </div>
+        </div> 
+        <div class="accordion js-accordion"> 
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
           </div>
@@ -61,7 +79,7 @@
               <div><p>Moving Average : </p><p>MA Signal :</p></div>
               <div><p>Exponential Moving Average : </p><p>EMA Signal :</p></div>
               <div><p>RSI : </p><p>RSI Signal : </p></div>
-              <div><p>Low Price : </p><p>Volume : </p></div>
+              <div><p>Last Price : </p><p>Volume : </p></div>
               <div><p>Hight Price : </p><p>Low Price : </p></div>
             </div>
             </div>
@@ -111,11 +129,11 @@
       <div id="tabs-3">
         <div class="tab-title">Signaling system</div>
         <div class="accordion js-accordion">
-          <div id="chartWrapper" style="width: 1000px; overflow-x: auto;">
-            <div id="legendWrapper">
-              <ul id="chart-legend"></ul>
+          <div class="chartWrapper" style="width: 1000px; overflow: auto;">
+            <div class="legendWrapper">
+              <ul id="AAPL-chart-legend"></ul>
             </div>
-            <canvas id="myChart"></canvas>
+            <canvas id="AAPL-chart"></canvas>
           </div>                                           
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
@@ -125,6 +143,12 @@
       <div id="tabs-4">
         <div class="tab-title">Signaling system</div>
         <div class="accordion js-accordion">
+          <div class="chartWrapper" style="width: 1000px; overflow: auto;">
+            <div class="legendWrapper">
+              <ul id="GOOGL-chart-legend"></ul>
+            </div>
+            <canvas id="GOOGL-chart"></canvas>
+          </div>
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
           </div>
@@ -133,6 +157,12 @@
       <div id="tabs-5">
         <div class="tab-title">Signaling system</div>
         <div class="accordion js-accordion">
+          <div class="chartWrapper" style="width: 1000px; overflow: auto;">
+            <div class="legendWrapper">
+              <ul id="AMZN-chart-legend"></ul>
+            </div>
+            <canvas id="AMZN-chart"></canvas>
+          </div>
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
           </div>
@@ -141,6 +171,12 @@
       <div id="tabs-6">
         <div class="tab-title">Signaling system</div>
         <div class="accordion js-accordion">
+          <div class="chartWrapper" style="width: 1000px; overflow: auto;">
+            <div class="legendWrapper">
+              <ul id="MSFT-chart-legend"></ul>
+            </div>
+            <canvas id="MSFT-chart"></canvas>
+          </div>
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
           </div>
@@ -149,6 +185,12 @@
       <div id="tabs-7">
         <div class="tab-title">Signaling system</div>
         <div class="accordion js-accordion">
+          <div class="chartWrapper" style="width: 1000px; overflow: auto;">
+            <div class="legendWrapper">
+              <ul id="TSLA-chart-legend"></ul>
+            </div>
+            <canvas id="TSLA-chart"></canvas>
+          </div>
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
           </div>
