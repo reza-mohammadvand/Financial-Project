@@ -26,11 +26,14 @@
 </script> -->
 </head>
 <body>
-  <div class="main">
-    <div class="header">      
+  <div class="main">    
+    <div class="header">
+      <div id="badge">
+        <div id="badge-num" class="badge-num">0</div>
+        <a class="entypo-bell"></a>
+      </div>      
       <p style="font-size: 35px; margin-top: 55px; margin-left: 122px; position: fixed;" >Dashboard</p>
       <i id="bell-icon" class="fa fa-bell"></i>
-      <p id="notification-count">0</p>
       <dev id="clock"></dev>
     </div>
     <div id="tabs">
@@ -39,7 +42,7 @@
           <input type="text" id="searchInput" name="search" placeholder="search">
           <ul id="list"></ul>
         </div>
-        <li><a href="#tabs-1"><span class="logo"><i class="fa fa-rocket" aria-hidden="true"></i></span>Signals</a></li>
+        <li ><a href="#tabs-1" onclick="resetNumber()"><span class="logo"><i class="fa fa-rocket" aria-hidden="true"></i></span>Signals</a></li>
         <li><a href="#tabs-2"><span class="logo"><i class="fa fa-volume-up" aria-hidden="true"></i></span>News</a></li>
         <p style="text-align: center; margin-top: 22px; color:#fff; font-size: 30px; padding-bottom:20px; border-bottom:2px solid #fff">Symbols</p>
         <li><a href="#tabs-3"><span class="logo"><img src="img/apple.svg"></span>AAPL</a></li>
@@ -134,7 +137,7 @@
               <ul id="AAPL-chart-legend"></ul>
             </div>
             <canvas id="AAPL-chart"></canvas>
-          </div>                                           
+          </div>                                       
           <div class="titles">
             <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
           </div>

@@ -88,7 +88,6 @@ function startTime() {
 
 
   // bell
-var count_notif = 0; // Initialize notification count
 
 function shakeBell() {
     $("#bell-icon").css({
@@ -96,7 +95,6 @@ function shakeBell() {
         "animation-iteration-count": "5" // Run the animation 3 times
     }); // Apply the rotation animation
     count_notif++; // Increment the notification count
-    $("#notification-count").text(count_notif); // Update the notification count display
     setTimeout(function(){ 
         $("#bell-icon").css({
             "animation": "",
@@ -106,35 +104,88 @@ function shakeBell() {
 }
 
 
+var i = 1;
+var badgeNum;
+var badge;
 
+function updateBadge() {
+    badge = document.getElementById('badge');
+    var alertNum = i++;
+    
+    var badgeChild = badge.children[0];
+    if(badgeChild.className === 'badge-num')
+        badge.removeChild(badge.children[0]);
 
-
-var count = 0; // Initialize alert box count
-
-function showAlertBox() {
-    count++; // Increment the alert box count
-    var alertBox = document.createElement('div');
-    alertBox.id = 'alertBox' + count;
-    alertBox.className = 'alert-box';
-    alertBox.style.background = "#e91e63";
-    alertBox.innerHTML = '<p style=color:#fff; opacity:1;>You Have a Sell Signal for AAPL </p>';
-    document.body.appendChild(alertBox);
-    setTimeout(function() {
-        alertBox.className += ' show';
-    }, 100);
-    setTimeout(function() {
-        hideAlertBox(count);
-    }, 3000); // Hide the alert box after 3 seconds
+    badgeNum = document.createElement('div'); 
+    badgeNum.setAttribute('class','badge-num');
+    badgeNum.innerText = alertNum;
+    var insertedElement = badge.insertBefore(badgeNum, badge.firstChild); 
 }
 
-function hideAlertBox(count) {
-    var alertBox = document.getElementById('alertBox' + count);
-    alertBox.className = 'alert-box';
-    setTimeout(function() {
-        document.body.removeChild(alertBox);
-    }, 2000);
+function resetNumber() {
+    i = 0;
+    updateBadge()
 }
 
+
+
+
+
+
+
+// notification
+var notification;
+var body = document.getElementsByTagName("body")[0]; // Select the first element
+var visible = false;
+var queue = [];
+
+function createNotification() {
+    notification = document.createElement('div');
+    var btn = document.createElement('button');
+    var msg = document.createElement('div');
+    btn.className = 'notification-close';
+    msg.className = 'notification-message';
+    btn.addEventListener('click', hideNotification, false);
+    notification.addEventListener('animationend', hideNotification, false);
+    notification.addEventListener('webkitAnimationEnd', hideNotification, false);
+    notification.appendChild(btn);
+    notification.appendChild(msg);
+}
+
+function updateNotification(type, signal,symbol) {
+    notification.className = 'notification notification-' + type;
+    notification.style.background = "#1fb74c"
+    if (signal =="Sell") {
+    notification.style.background = "#e91e63"
+    }
+    message = "You have a new "+signal+" signal on "+symbol
+    notification.querySelector('.notification-message').innerHTML = message;
+}
+
+function showNotification(type, signal,symbol) {
+    if (visible) {
+        queue.push([type, signal,symbol]);
+        return;
+    }
+    if (!notification) {
+        createNotification();
+    }
+    updateNotification(type, signal,symbol);
+    body.appendChild(notification);
+    visible = true;
+}
+
+function hideNotification() {
+    if (visible) {
+        visible = false;
+        body.removeChild(notification);
+        if (queue.length) {
+            showNotification.apply(null, queue.shift());
+        }
+    } 
+}
+
+//showNotification(null, 'Buy','APPL')
 
 
 
@@ -296,10 +347,10 @@ function createChart(chartId, volumeData, timeData, priceData, maData, emaData, 
 // Initialize empty arrays
 var volumeData1 = [5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,];
 var timeData1 = ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05"];
-var priceData1 = [120.1, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75];
-var maData1 = [120.1, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75];
-var emaData1 = [120.1, 120.93, 120.48, 121.27, 122.07,120.1, 120.93, 120.48, 121.27, 122.07, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75];
-var rsiData1 = [70, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75];
+var priceData1 = [120.1, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 71];
+var maData1 = [120.1, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 72];
+var emaData1 = [120.1, 120.93, 120.48, 121.27, 122.07,120.1, 120.93, 120.48, 121.27, 122.07, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 73];
+var rsiData1 = [70, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 74];
 
 var volumeData2 = [10];
 var timeData2 = [10];
@@ -335,6 +386,7 @@ addData(chart1, "2024-01-09", 1024.7, 1201.92, 1022.57, 76, 5000);
 
 var chart1 = createChart('TSLA-chart', volumeData1, timeData1, priceData1, maData1, emaData1, rsiData1);
 addData(chart1, "2024-01-10", 1024.7, 1201.92, 1022.57, 76, 5000);
+
 
 
 
@@ -425,16 +477,4 @@ var smallChart2 = createSmallChart('GOOGLsmallChart', priceData1, timeData1);
 var smallChart1 = createSmallChart('AMZNsmallChart', priceData1, timeData1);
 var smallChart2 = createSmallChart('MSFTsmallChart', priceData1, timeData1);
 var smallChart1 = createSmallChart('TSLAsmallChart', priceData1, timeData1);
-
-
-
-
-
-
-
-
-
-
-
-
 
