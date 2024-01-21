@@ -87,6 +87,10 @@ def forward_data_to_kafka(data):
 
     except Exception as e:
         print(f"Error forwarding data to Kafka: {e}")
+        print(f"Exception type: {type(e)}")
+        print(f"Exception args: {e.args}")
+        print(f"Exception message: {str(e)}")
+
 
 if __name__ == '__main__':
     app.run(port=5000)

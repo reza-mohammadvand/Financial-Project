@@ -12,18 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
-  <!-- <script>
-    var ws = new WebSocket("ws://localhost:5678/"),
-        messages = document.createElement('ul');
-    ws.onmessage = function (event) {
-        var messages = document.getElementsByTagName('ul')[0],
-            message = document.createElement('li'),
-            content = document.createTextNode(JSON.stringify(JSON.parse(event.data), null, 2));
-        message.appendChild(content);
-        messages.appendChild(message);
-    };
-    document.body.appendChild(messages);
-</script> -->
 </head>
 <body>
   <div class="main">    
@@ -73,8 +61,9 @@
         </div> 
         <div class="accordion js-accordion"> 
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
           </div>
+          <div id="Signals">
           <div class="accordion__item js-accordion-item">
             <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal">Buy</p><p class="close_price">1000.254</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
           <div class="accordion-body js-accordion-body">
@@ -87,46 +76,17 @@
             </div>
             </div>
             </div>
+          </div>
         </div>
       </div>
       <div id="tabs-2">
         <div class="tab-title">Signaling system</div>
-        <div class="accordion js-accordion">
+        <div class="accordion js-accordion" >
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 120px">Type</p><p style="margin-left: 154px">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left:130px">Type</p><p style="margin-left: 125px;">Time</p></div>
           </div>
-          <div class="accordion__item js-accordion-item">
-            <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal">Buy</p><p class="close_price">Order Book</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
-          <div class="accordion-body js-accordion-body">
-            <div class="accordion-body__contents">
-              <div><p>Price Order : </p><p>Quantity :</p></div>
-            </div>
-            </div>
-            </div>
-            <div class="accordion__item js-accordion-item">
-              <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal">Buy</p><p class="close_price">News Sentiment</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
-            <div class="accordion-body js-accordion-body">
-              <div class="accordion-body__contents">
-                <div><p>Sentiment Score : </p><p>Sentiment Magnitude :</p></div>
-              </div>
-              </div>
-              </div>
-              <div class="accordion__item js-accordion-item">
-                <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">AAPL</p><p class="Signal">Buy</p><p class="close_price">Market Data</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
-              <div class="accordion-body js-accordion-body">
-                <div class="accordion-body__contents">
-                  <div><p>Market Cap : </p><p>P/E Ratio :</p></div>
-                </div>
-                </div>
-                </div>
-                <div class="accordion__item js-accordion-item">
-                  <div class="accordion-header js-accordion-header" style="background: #686868;"><p class="Name_Symbol">General</p><p class="Signal">Buy</p><p class="close_price">economic_indicator</p><p class="time">22:22:22</p><i class="fa fa-chevron-down" aria-hidden="true"></i></div> 
-                <div class="accordion-body js-accordion-body">
-                  <div class="accordion-body__contents">
-                    <div><p>Indicator Name : </p><p>Value :</p></div>
-                  </div>
-                  </div>
-                  </div>
+          <div id="news_page">
+          </div>
         </div>
       </div>
       <div id="tabs-3">
@@ -139,7 +99,9 @@
             <canvas id="AAPL-chart"></canvas>
           </div>                                       
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+          </div>
+          <div id="AAPL-Signal">
           </div>
         </div>
       </div>
@@ -153,7 +115,9 @@
             <canvas id="GOOGL-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+          </div>
+          <div id="GOOGL-Signal">
           </div>
         </div>
       </div>
@@ -167,7 +131,9 @@
             <canvas id="AMZN-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+          </div>
+          <div id="AMZN-Signal">
           </div>
         </div>
       </div>
@@ -181,7 +147,9 @@
             <canvas id="MSFT-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+          </div>
+          <div id="MSFT-Signal">
           </div>
         </div>
       </div>
@@ -195,13 +163,15 @@
             <canvas id="TSLA-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 30px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left: 85px">Close Price</p><p style="margin-left: 115px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+          </div>
+          <div id="TSLA-Signal">
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  
 <script type="text/javascript" src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

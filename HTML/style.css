@@ -380,8 +380,19 @@ div.ui-tabs-panel{
     border-radius: 15px 15px 0 0;
     background: #686868;
   }
-  
+  .accordion-header p:first-child,.accordion-header p:nth-child(2){
+    text-align: left;
+    width: 20%;
+    margin-top: 0;
+  }
+  .accordion-header p:nth-child(4),.accordion-header p:nth-child(3){
+    text-align: left;
+    width: 25%;
+    margin-top: 0;
+  }
   .accordion-header {
+    position: relative;
+    z-index: 2;
     text-align: center;
     display: flex;
     justify-content: space-between;
@@ -425,6 +436,8 @@ div.ui-tabs-panel{
     background: #cbcbcb;
     color: #1c1c1c;
     display: none;
+    padding-top: 15px;
+    margin-top: -12px;
   }
   
   .accordion-body__contents {
@@ -433,7 +446,7 @@ div.ui-tabs-panel{
     font-size: 20px;
   }
 
-  .accordion__item{
+  .accordion-item{
     margin: 35px 0;
   }
 
@@ -448,9 +461,11 @@ div.ui-tabs-panel{
 }
 .accordion-body__contents div p:last-child{
     width: 40%;
+    margin: 15px 0;
+
 }
   
-  .accordion__item.active:last-child .accordion-header {
+  .accordion-item.active:last-child .accordion-header {
     border-radius: none;
   }
   
@@ -459,7 +474,7 @@ div.ui-tabs-panel{
 }
   
 
-  .accordion__item > .accordion-header i {
+  .accordion-item > .accordion-header i {
     float: right;
     position: relative;
     top: 2px;
@@ -467,12 +482,12 @@ div.ui-tabs-panel{
     transform: rotate(0deg);
   }
   
-  .accordion__item.active > .accordion-header i {
+  .accordion-item.active > .accordion-header i {
     transform: rotate(-180deg);
   }
 
   
-  .accordion__item .accordion__item .accordion-header {
+  .accordion-item .accordion-item .accordion-header {
     background: #f1f1f1;
     color: #353535;
   }
@@ -497,15 +512,15 @@ div.ui-tabs-panel{
     position: relative;
 }
 
-.chartWrapper::-webkit-scrollbar {
+.chartWrapper::-webkit-scrollbar,body::-webkit-scrollbar {
     padding: 2px;
     border-radius: 10px;
-    width: 5px;
+    width: 10px;
     height: 8px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.chartWrapper::-webkit-scrollbar-thumb {
+.chartWrapper::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb {
     border-radius: 18px;
     background: rgb(72 72 72);
 }

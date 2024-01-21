@@ -92,6 +92,8 @@ def generate_signal(data):
         elif order_type == 'sell' and quantity > 50 and price < 500:
             data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: Order book shows a sell order'
+        else:
+            data["final_signal"] = "Neutral"
 
     elif data_type == 'market_data':
         # Get the stock symbol, market cap, and P/E ratio

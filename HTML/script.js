@@ -29,58 +29,86 @@ function startTime() {
 
 
 // accordion
-  var accordion = (function(){
-  
-    var $accordion = $('.js-accordion');
+var $accordion = $('.js-accordion');
+
+// default settings
+var settings = {
+  // animation speed
+  speed: 400,  // Changed 'Speed' to 'speed'
+ 
+  // close all other accordion items if true
+  oneOpen: false
+};
+
+var accordion = {
+  // pass configurable object literal
+  init: function($settings) {
     var $accordion_header = $accordion.find('.js-accordion-header');
-    var $accordion_item = $('.js-accordion-item');
+    $accordion_header.on('click', function() {
+      accordion.toggle($(this));
+    });
    
-    // default settings 
-    var settings = {
-      // animation speed
-      speed: 400,
-      
-      // close all other accordion items if true
-      oneOpen: false
-    };
-      
-    return {
-      // pass configurable object literal
-      init: function($settings) {
-        $accordion_header.on('click', function() {
-          accordion.toggle($(this));
-        });
-        
-        $.extend(settings, $settings); 
-        
-        // ensure only one accordion is active if oneOpen is true
-        if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
-          $('.js-accordion-item.active:not(:first)').removeClass('active');
-        }
-        
-        // reveal the active accordion bodies
-        $('.js-accordion-item.active').find('> .js-accordion-body').show();
-      },
-      toggle: function($this) {
-              
-        if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0]) {
-          $this.closest('.js-accordion')
-                 .find('> .js-accordion-item') 
-                 .removeClass('active')
-                 .find('.js-accordion-body')
-                 .slideUp()
-        }
-        
-        // show/hide the clicked accordion item
-        $this.closest('.js-accordion-item').toggleClass('active');
-        $this.next().stop().slideToggle(settings.speed);
-      }
+    $.extend(settings, $settings);
+   
+    // ensure only one accordion is active if oneOpen is true
+    if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
+      $('.js-accordion-item.active:not(:first)').removeClass('active');
     }
-  })();
-  
-  $(document).ready(function(){
-    accordion.init({ speed: 300, oneOpen: true });
+   
+    // reveal the active accordion bodies
+    $('.js-accordion-item.active').find('> .js-accordion-body').show();
+  },
+  toggle: function($this) {
+    var $accordion_item = $('.js-accordion-item');
+         
+    if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0] ) {
+      $this.closest('.js-accordion')
+             .find('> .js-accordion-item')
+             .removeClass('active')
+             .find('.js-accordion-body')
+             .slideUp()
+    }
+   
+    // show/hide the clicked accordion item
+    $this.closest('.js-accordion-item').toggleClass('active');
+    $this.next().stop().slideToggle(settings.speed);
+  }
+}
+
+// Call the function manually whenever you need it
+accordion.init({ speed: 300, oneOpen: true });
+
+
+
+
+
+$(document).ready(function() {
+  // Add click event listener to all .accordion-header elements
+  $(document).on('click', '.accordion-header', function() {
+    var $accordionBody = $(this).closest('.accordion-item').find('.accordion-body');
+
+    // Close all .accordion-body elements
+    $('.accordion-body').not($accordionBody).slideUp();
+
+    // Toggle the .accordion-body element within the same .accordion-item as the clicked .accordion-header
+    $accordionBody.slideToggle();
   });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -94,7 +122,6 @@ function shakeBell() {
         "animation": "rotation 0.2s linear",
         "animation-iteration-count": "5" // Run the animation 3 times
     }); // Apply the rotation animation
-    count_notif++; // Increment the notification count
     setTimeout(function(){ 
         $("#bell-icon").css({
             "animation": "",
@@ -126,9 +153,6 @@ function resetNumber() {
     i = 0;
     updateBadge()
 }
-
-
-
 
 
 
@@ -185,7 +209,6 @@ function hideNotification() {
     } 
 }
 
-//showNotification(null, 'Buy','APPL')
 
 
 
@@ -402,7 +425,7 @@ window.onload = function() {
 
 
 
-
+// small chart
 function createSmallChart(chartId, priceData, timeData) {
   var last10Prices = priceData.slice(-10);
   var last10Labels = timeData.slice(-10);
@@ -477,4 +500,176 @@ var smallChart2 = createSmallChart('GOOGLsmallChart', priceData1, timeData1);
 var smallChart1 = createSmallChart('AMZNsmallChart', priceData1, timeData1);
 var smallChart2 = createSmallChart('MSFTsmallChart', priceData1, timeData1);
 var smallChart1 = createSmallChart('TSLAsmallChart', priceData1, timeData1);
+
+
+
+
+// add data to web
+
+var ws = new WebSocket("ws://localhost:5678/")
+ws.onmessage = function (event) {
+    var jsonData = JSON.parse(event.data);
+    // set time
+    const today = new Date();
+    let h = today.getHours();
+    let m = today.getMinutes();
+    let s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    time =  h + ":" + m + ":" + s;
+    if (jsonData.hasOwnProperty('data_type')) {
+          // Create elements
+          var divItem = document.createElement('div');
+          var divHeader = document.createElement('div');
+          var pNameSymbol = document.createElement('p');
+          var pSignal = document.createElement('p');
+          var pClosePrice = document.createElement('p');
+          var pTime = document.createElement('p');
+          var iElement = document.createElement('i');
+          var divBody = document.createElement('div');
+          var divContents = document.createElement('div');
+          var divInner = document.createElement('div');
+          var pPriceOrder = document.createElement('p');
+          var pQuantity = document.createElement('p');
+
+          // Set classes
+          divItem.className = 'accordion-item';
+          divHeader.className = 'accordion-header';
+          divBody.className = 'accordion-body';
+          divContents.className = 'accordion-body__contents';
+          iElement.className = 'fa fa-chevron-down'
+          iElement.ariaHidden = "true"
+          divBody.style.display = "none"
+
+          pTime.textContent = time;
+          has_stock_symbol = jsonData.hasOwnProperty('stock_symbol')
+          if (has_stock_symbol == true){
+            var stockSymbolNode = document.createTextNode(jsonData.stock_symbol);
+            pNameSymbol.appendChild(stockSymbolNode);
+
+          }
+          if(has_stock_symbol==false){
+            pNameSymbol.textContent = "General";
+          }
+
+          if(jsonData.final_signal=="Buy"){
+            if(has_stock_symbol){
+              showNotification(null, 'Buy',jsonData.stock_symbol)
+            }
+            if(has_stock_symbol==false){
+              showNotification(null, 'Buy',"GDP")
+            }
+            pSignal.textContent = 'Buy';
+            divHeader.style.background = '#1fb74c';
+          }
+          if(jsonData.final_signal=="Sell"){
+            if(has_stock_symbol){
+              showNotification(null, 'Sell',jsonData.stock_symbol)
+            }
+            if(has_stock_symbol==false){
+              showNotification(null, 'Sell',"GDP")
+            }  
+            pSignal.textContent = 'Sell';
+            divHeader.style.background = '#e91e63';
+          }
+          if(jsonData.final_signal=="Neutral"){
+            pSignal.textContent = 'Neutral';
+          }
+
+          if(jsonData.data_type=="order_book"){
+            pClosePrice.textContent = 'Order Book';
+            var a = document.createTextNode(jsonData.price);
+            pPriceOrder.textContent = 'Price Order: ';
+            pPriceOrder.appendChild(a);
+            var b = document.createTextNode(jsonData.quantity);
+            pQuantity.textContent = 'Quantity: ';
+            pQuantity.appendChild(b);
+          }
+          if(jsonData.data_type=="news_sentiment"){
+            pClosePrice.textContent = 'News Sentiment';
+            var a = document.createTextNode(jsonData.sentiment_score);
+            pPriceOrder.textContent = 'Sentiment Score : ';
+            pPriceOrder.appendChild(a);
+            var b = document.createTextNode(jsonData.sentiment_magnitude);
+            pQuantity.textContent = 'Sentiment Magnitude : ';
+            pQuantity.appendChild(b);
+          }
+          if(jsonData.data_type=="market_data"){
+            pClosePrice.textContent = 'Market Data';
+            var a = document.createTextNode(jsonData.market_cap);
+            pPriceOrder.textContent = 'Market Cap : ';
+            pPriceOrder.appendChild(a);
+            var b = document.createTextNode(jsonData.pe_ratio);
+            pQuantity.textContent = 'P/E Ratio : ';
+            pQuantity.appendChild(b);
+          }
+          if(jsonData.data_type=="economic_indicator"){
+            pClosePrice.textContent = 'Economic';
+            pPriceOrder.textContent = 'Indicator Name : GDP Growth Rate';
+            var b = document.createTextNode(jsonData.value);
+            pQuantity.textContent = 'Value : ';
+            pQuantity.appendChild(b);
+          }
+          divInner.appendChild(pPriceOrder);
+          divInner.appendChild(pQuantity);
+          divContents.appendChild(divInner);
+          divBody.appendChild(divContents);
+          divHeader.appendChild(pNameSymbol);
+          divHeader.appendChild(pSignal);
+          divHeader.appendChild(pClosePrice);
+          divHeader.appendChild(pTime);
+          divHeader.appendChild(iElement);
+          divItem.appendChild(divHeader);
+          divItem.appendChild(divBody);
+          document.getElementById("news_page").prepend(divItem.cloneNode(true));
+
+          if (jsonData.hasOwnProperty('stock_symbol')){
+            var divItemCopy = divItem.cloneNode(true);
+            if(jsonData.stock_symbol == "AAPL"){
+              document.getElementById("AAPL-Signal").prepend(divItemCopy);
+            }
+            divItemCopy = divItem.cloneNode(true);
+            if(jsonData.stock_symbol == "GOOGL"){
+              document.getElementById("GOOGL-Signal").prepend(divItemCopy);
+            }
+            divItemCopy = divItem.cloneNode(true);
+            if(jsonData.stock_symbol == "AMZN"){
+              document.getElementById("AMZN-Signal").prepend(divItemCopy);
+            }
+            divItemCopy = divItem.cloneNode(true);
+            if(jsonData.stock_symbol == "MSFT"){
+              document.getElementById("MSFT-Signal").prepend(divItemCopy);
+            }
+            divItemCopy = divItem.cloneNode(true);
+            if(jsonData.stock_symbol == "TSLA"){
+              document.getElementById("TSLA-Signal").prepend(divItemCopy);
+            }
+          }
+          
+          if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
+            document.getElementById("Signals").appendChild(divItem.cloneNode(true));
+            updateBadge()
+            shakeBell()
+          }
+          
+    } else {
+    console.log("sdgg");
+    }
+};
+
+
+
+// if(jsonData.stock_symbol) {
+//   var a = document.createTextNode(jsonData.stock_symbol);
+//   document.body.appendChild(a);
+// }
+
+
+
+
+
+
+
+
+
 
