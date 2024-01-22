@@ -252,7 +252,7 @@ $(document).ready(function() {
 function createChart(chartId, volumeData, timeData, priceData, maData, emaData, rsiData) {
   
   var total = volumeData.reduce((a, b) => a + b, 0);
-  var average = total / volumeData.length;
+  var average = volumeData.length > 0 ? total / volumeData.length : 5000;  // Set a default 
 
   var numDataPoints = 15; // The number of data points
   var pointWidth = 80; // The width of each data point in px
@@ -344,43 +344,49 @@ function createChart(chartId, volumeData, timeData, priceData, maData, emaData, 
         }
       },
       legend: {
-        display: false // Hide the default legend
-      },
+        display: true, // Hide the default legend
+            },
     }
-  });
-
-  // Generate a custom legend
-  var ul = document.getElementById(chartId + "-legend");
-  myChart.data.datasets.forEach((dataset, i) => {
-      var li = document.createElement("li");
-      li.style.color = dataset.borderColor;
-      li.textContent = dataset.label;
-      li.onclick = function(e) {
-          var hidden = !myChart.getDatasetMeta(i).hidden;
-          myChart.getDatasetMeta(i).hidden = hidden;
-          li.style.textDecoration = hidden ? "line-through" : "";
-          myChart.update();
-      };
-      ul.appendChild(li);
   });
 
   return myChart;
 }
 
 // Initialize empty arrays
-var volumeData1 = [5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,5000,4500,2541,5685,4850,];
-var timeData1 = ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05","2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-05","2024-01-05", "2024-01-05"];
-var priceData1 = [120.1, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 75, 121.5, 119.7, 122.3, 123.5,120.1, 121.5, 119.7, 122.3, 123.5, 123.5, 75, 71];
-var maData1 = [120.1, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 72];
-var emaData1 = [120.1, 120.93, 120.48, 121.27, 122.07,120.1, 120.93, 120.48, 121.27, 122.07, 123.5, 75, 75, 120.8, 120.43, 120.9, 121.42,120.1, 120.8, 120.43, 120.9, 121.42, 123.5, 75, 73];
-var rsiData1 = [70, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 75, 72, 69, 73, 75,70, 72, 69, 73, 75, 75, 75, 74];
+var AAPLvolumeData = [];
+var AAPLtimeData =[];
+var AAPLpriceData = [];
+var AAPLmaData =[];
+var AAPLemaData = [];
+var AAPLrsiData = [];
 
-var volumeData2 = [10];
-var timeData2 = [10];
-var priceData2 = [10];
-var maData2 = [10];
-var emaData2 = [10];
-var rsiData2 = [10];
+var GOOGLvolumeData = [];
+var GOOGLtimeData = [];
+var GOOGLpriceData = [];
+var GOOGLmaData = [];
+var GOOGLemaData = [];
+var GOOGLrsiData = [];
+
+var AMZNvolumeData = [];
+var AMZNtimeData = [];
+var AMZNpriceData = [];
+var AMZNmaData = [];
+var AMZNemaData = [];
+var AMZNrsiData = [];
+
+var MSFTvolumeData = [];
+var MSFTtimeData = [];
+var MSFTpriceData = [];
+var MSFTmaData = [];
+var MSFTemaData = [];
+var MSFTrsiData = [];
+
+var TSLAvolumeData = [];
+var TSLAtimeData = [];
+var TSLApriceData = [];
+var TSLAmaData = [];
+var TSLAemaData = [];
+var TSLArsiData = [];
 
 // Function to add data
 function addData(chart, label, priceData, maData, emaData, rsiData, volumeData) {
@@ -394,41 +400,32 @@ function addData(chart, label, priceData, maData, emaData, rsiData, volumeData) 
 }
 
 // Usage:
-var chart1 = createChart('AAPL-chart', volumeData1, timeData1, priceData1, maData1, emaData1, rsiData1);
-// Now you can add data to your chart as needed
-addData(chart1, "2024-01-06", 1024.7, 1201.92, 1022.57, 76, 5000);
-
-var chart1 = createChart('GOOGL-chart', volumeData1, timeData1, priceData1, maData1, emaData1, rsiData1);
-addData(chart1, "2024-01-07", 1024.7, 1201.92, 1022.57, 76, 5000);
-
-var chart1 = createChart('AMZN-chart', volumeData1, timeData1, priceData1, maData1, emaData1, rsiData1);
-addData(chart1, "2024-01-08", 1024.7, 1201.92, 1022.57, 76, 5000);
-
-var chart1 = createChart('MSFT-chart', volumeData1, timeData1, priceData1, maData1, emaData1, rsiData1);
-addData(chart1, "2024-01-09", 1024.7, 1201.92, 1022.57, 76, 5000);
-
-var chart1 = createChart('TSLA-chart', volumeData1, timeData1, priceData1, maData1, emaData1, rsiData1);
-addData(chart1, "2024-01-10", 1024.7, 1201.92, 1022.57, 76, 5000);
-
+var AAPL_chart = createChart('AAPL-chart', AAPLvolumeData, AAPLtimeData, AAPLpriceData, AAPLmaData, AAPLemaData, AAPLrsiData);
+var GOOGL_chart = createChart('GOOGL-chart', GOOGLvolumeData, GOOGLtimeData, GOOGLpriceData, GOOGLmaData, GOOGLemaData, GOOGLrsiData);
+var AMZN_chart = createChart('AMZN-chart', AMZNvolumeData, AMZNtimeData, AMZNpriceData, AMZNmaData, AMZNemaData, AMZNrsiData);
+var MSFT_chart = createChart('MSFT-chart', MSFTvolumeData, MSFTtimeData, MSFTpriceData, MSFTmaData, MSFTemaData, MSFTrsiData);
+var TSLA_chart = createChart('TSLA-chart', TSLAvolumeData, TSLAtimeData, TSLApriceData, TSLAmaData, TSLAemaData, TSLArsiData);
 
 
 
 
 // go to end of chart
-window.onload = function() {
+function scrollToChartEnd() {
   var elements = document.getElementsByClassName("chartWrapper");
   for (var i = 0; i < elements.length; i++) {
     elements[i].scrollLeft = elements[i].scrollWidth;
   }
 }
+scrollToChartEnd()
+
 
 
 
 
 // small chart
 function createSmallChart(chartId, priceData, timeData) {
-  var last10Prices = priceData.slice(-10);
-  var last10Labels = timeData.slice(-10);
+  var last10Prices = priceData.slice(-15);
+  var last10Labels = timeData.slice(-15);
 
   const mysmallChart = new Chart(chartId, {
       type: "line",
@@ -495,13 +492,11 @@ function createSmallChart(chartId, priceData, timeData) {
 }
 
 // Usage:
-var smallChart1 = createSmallChart('AAPLsmallChart', priceData1, timeData1);
-var smallChart2 = createSmallChart('GOOGLsmallChart', priceData1, timeData1);
-var smallChart1 = createSmallChart('AMZNsmallChart', priceData1, timeData1);
-var smallChart2 = createSmallChart('MSFTsmallChart', priceData1, timeData1);
-var smallChart1 = createSmallChart('TSLAsmallChart', priceData1, timeData1);
-
-
+var AAPLsmallChart = createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
+var GOOGLsmallChart = createSmallChart('GOOGLsmallChart', GOOGLpriceData, GOOGLtimeData);
+var AMZNsmallChart = createSmallChart('AMZNsmallChart', AMZNpriceData, AMZNtimeData);
+var MSFTsmallChart = createSmallChart('MSFTsmallChart', MSFTpriceData, MSFTtimeData);
+var TSLAsmallChart = createSmallChart('TSLAsmallChart', TSLApriceData, TSLApriceData);
 
 
 // add data to web
@@ -536,7 +531,6 @@ ws.onmessage = function (event) {
           divItem.className = 'accordion-item';
           divHeader.className = 'accordion-header';
           divBody.className = 'accordion-body';
-          divContents.className = 'accordion-body__contents';
           iElement.className = 'fa fa-chevron-down'
           iElement.ariaHidden = "true"
           divBody.style.display = "none"
@@ -621,6 +615,7 @@ ws.onmessage = function (event) {
           divHeader.appendChild(iElement);
           divItem.appendChild(divHeader);
           divItem.appendChild(divBody);
+          
           document.getElementById("news_page").prepend(divItem.cloneNode(true));
 
           if (jsonData.hasOwnProperty('stock_symbol')){
@@ -652,17 +647,160 @@ ws.onmessage = function (event) {
             shakeBell()
           }
           
-    } else {
-    console.log("sdgg");
-    }
+    } 
+    else {
+      opening_price = document.createTextNode(jsonData.opening_price)
+      volume = document.createTextNode(jsonData.volume)
+      high = document.createTextNode(jsonData.high)
+      stock_symbol = document.createTextNode(jsonData.stock_symbol)
+      low = document.createTextNode(jsonData.low)
+      rsi = document.createTextNode(jsonData.rsi)
+      closing_price = document.createTextNode(jsonData.closing_price)
+      exponential_moving_average = document.createTextNode(jsonData.exponential_moving_average)
+      moving_average = document.createTextNode(jsonData.moving_average)
+      rsi_signal = document.createTextNode(jsonData.rsi_signal)
+      ma_signal = document.createTextNode(jsonData.ma_signal)
+      ema_signal = document.createTextNode(jsonData.ema_signal)
+      final_signal = document.createTextNode(jsonData.final_signal)
+
+// Create elements
+      var divItem = document.createElement('div');
+      var divHeader = document.createElement('div');
+      var pNameSymbol = document.createElement('p');
+      var pSignal = document.createElement('p');
+      var pClosePrice = document.createElement('p');
+      var pTime = document.createElement('p');
+      var iElement = document.createElement('i');
+      var divBody = document.createElement('div');
+      var divContents = document.createElement('div');
+      var divInner1 = document.createElement('div');
+      var divInner2 = document.createElement('div');
+      var divInner3 = document.createElement('div');
+      var divInner4 = document.createElement('div');
+      var divInner5 = document.createElement('div');
+      var pMA = document.createElement('p');
+      var pMASignal = document.createElement('p');
+      var pEMA = document.createElement('p');
+      var pEMASignal = document.createElement('p');
+      var pRSI = document.createElement('p');
+      var pRSISignal = document.createElement('p');
+      var pOpen = document.createElement('p');
+      var pVolume = document.createElement('p');
+      var pHight = document.createElement('p');
+      var pLow = document.createElement('p');
+
+      // Set classes
+      divItem.className = 'accordion-item';
+      divHeader.className = 'accordion-header';
+      divBody.className = 'accordion-body';
+
+      // Set styles
+      divBody.style.display = 'none';
+      iElement.className = 'fa fa-chevron-down';
+      iElement.ariaHidden = "true"
+
+      // Set text content
+      pTime.textContent = time;
+      pNameSymbol.appendChild(stock_symbol) ;
+      pSignal.appendChild(final_signal) ;
+      pClosePrice.appendChild(closing_price) ;
+
+
+
+      pMA.textContent = 'Moving Average : ';
+      pMA.appendChild(moving_average);
+      pMASignal.textContent = 'MA Signal : ';
+      pMASignal.appendChild(ma_signal);
+      pEMA.textContent = "Exponential Moving Average : ";
+      pEMA.appendChild(exponential_moving_average);
+      pEMASignal.textContent = "EMA Signal : ";
+      pEMASignal.appendChild(ema_signal);
+      pRSI.textContent = "RSI : ";
+      pRSI.appendChild(rsi);
+      pRSISignal.textContent = "RSI Signal : ";
+      pRSISignal.appendChild(rsi_signal);
+      pOpen.textContent ="Open Price : " ;
+      pOpen.appendChild(opening_price);
+      pVolume.textContent = "Volume : ";
+      pVolume.appendChild(volume);
+      pHight.textContent ="Hight Price : ";
+      pHight.appendChild(high);
+      pLow.textContent = "Low Price : ";
+      pLow.appendChild(low);
+
+      if(jsonData.final_signal=="Buy"){
+          showNotification(null, 'Buy',jsonData.stock_symbol)
+          divHeader.style.background = '#1fb74c';
+        }
+      if(jsonData.final_signal=="Sell"){
+          showNotification(null, 'Sell',jsonData.stock_symbol) 
+          divHeader.style.background = '#e91e63';
+      }
+
+      // Append elements
+      divInner1.appendChild(pMA);
+      divInner1.appendChild(pMASignal);
+      divBody.appendChild(divInner1);
+      divInner2.appendChild(pEMA);
+      divInner2.appendChild(pEMASignal);
+      divBody.appendChild(divInner2);
+      divInner3.appendChild(pRSI);
+      divInner3.appendChild(pRSISignal);
+      divBody.appendChild(divInner3);
+      divInner4.appendChild(pOpen);
+      divInner4.appendChild(pVolume);
+      divBody.appendChild(divInner4);
+      divInner5.appendChild(pHight);
+      divInner5.appendChild(pLow);
+      divBody.appendChild(divInner5);
+      divHeader.appendChild(pNameSymbol);
+      divHeader.appendChild(pSignal);
+      divHeader.appendChild(pClosePrice);
+      divHeader.appendChild(pTime);
+      divHeader.appendChild(iElement);
+      divItem.appendChild(divHeader);
+      divItem.appendChild(divBody);
+
+      var divItemCopy = divItem.cloneNode(true);
+      if(jsonData.stock_symbol == "AAPL"){
+        document.getElementById("AAPL-Signal").prepend(divItemCopy);
+        addData(AAPL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+        var AAPLsmallChart = createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
+      }
+      divItemCopy = divItem.cloneNode(true);
+      if(jsonData.stock_symbol == "GOOGL"){
+        document.getElementById("GOOGL-Signal").prepend(divItemCopy);
+        addData(GOOGL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+        createSmallChart('GOOGLsmallChart', GOOGLpriceData, GOOGLtimeData);
+      }
+      divItemCopy = divItem.cloneNode(true);
+      if(jsonData.stock_symbol == "AMZN"){
+        document.getElementById("AMZN-Signal").prepend(divItemCopy);
+        addData(AMZN_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+        createSmallChart('AMZNsmallChart', AMZNpriceData, AMZNtimeData);
+      }
+      divItemCopy = divItem.cloneNode(true);
+      if(jsonData.stock_symbol == "MSFT"){
+        document.getElementById("MSFT-Signal").prepend(divItemCopy);
+        addData(MSFT_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+        createSmallChart('MSFTsmallChart', MSFTpriceData, MSFTtimeData);
+      }
+      divItemCopy = divItem.cloneNode(true);
+      if(jsonData.stock_symbol == "TSLA"){
+        document.getElementById("TSLA-Signal").prepend(divItemCopy);
+        addData(TSLA_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+        createSmallChart('TSLAsmallChart', TSLApriceData, TSLApriceData);
+      }
+    
+      if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
+        document.getElementById("Signals").appendChild(divItem.cloneNode(true));
+        updateBadge()
+        shakeBell()
+      }
+      scrollToChartEnd();
+     }
 };
 
-
-
-// if(jsonData.stock_symbol) {
-//   var a = document.createTextNode(jsonData.stock_symbol);
-//   document.body.appendChild(a);
-// }
 
 
 

@@ -436,31 +436,28 @@ div.ui-tabs-panel{
     background: #cbcbcb;
     color: #1c1c1c;
     display: none;
-    padding-top: 15px;
+    padding: 10px 30px;
+    padding-top: 30px;
     margin-top: -12px;
   }
   
-  .accordion-body__contents {
-    box-shadow: 0px 10px 19px #141414;
-    padding: 1em 1.5em;
-    font-size: 20px;
-  }
+
 
   .accordion-item{
     margin: 35px 0;
   }
 
-  .accordion-body__contents div{
+  .accordion-body div{
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .accordion-body__contents div p:first-child{
+  .accordion-body div p:first-child{
     margin: 15px 0;
-    width: 60%;
+    width: 70%;
 }
-.accordion-body__contents div p:last-child{
-    width: 40%;
+.accordion-body div p:last-child{
+    width: 30%;
     margin: 15px 0;
 
 }
@@ -562,13 +559,12 @@ margin-top: 20px;
 }
 
 
-
 .notification {
     display: block;
     position: fixed;
     padding: 25px;
     overflow: hidden;
-    width: 250px;
+    width: 300px;
     border-radius: 4px;
     box-shadow: 1px 1px 5px rgba(0,0,0, .2);
     color: #fff;
@@ -576,6 +572,8 @@ margin-top: 20px;
     animation: show-notification 3s ease-out;
     top: 810px;
     right: 35px;
+    text-align: center;
+    z-index: 500;
 }
 
 .notification-close {
@@ -594,17 +592,9 @@ margin-top: 20px;
 
 .notification-close::before {
     content: 'X';
-    font-size: 12px;
+    font-size: 15px;
     font-weight: normal;
 }
-
-.notification-close:hover {
-    color: #000;
-}
-
-
-
-
 
 @-webkit-keyframes show-notification {
     0% {

@@ -33,9 +33,9 @@ def generate_signal(data):
         sell_signals = signals.count('Sell')
 
         # Only print a signal if two or more indicators agree
-        if buy_signals >= 2:
+        if buy_signals == 3:
             signal = 'Buy'
-        elif sell_signals >= 2:
+        elif sell_signals == 3:
             signal = 'Sell'
         else:
             signal = 'Neutral'
@@ -68,10 +68,10 @@ def generate_signal(data):
         value = data.get('value')
 
         # Generate a signal based on the economic indicator
-        if indicator_name == 'GDP Growth Rate' and value > 2:
+        if indicator_name == 'GDP Growth Rate' and value > 3:
             data["final_signal"] = "Buy"
             return f'Buy signal: {indicator_name} is positive ({value})'
-        elif indicator_name == 'GDP Growth Rate' and value < -2:
+        elif indicator_name == 'GDP Growth Rate' and value < -3:
             data["final_signal"] = "Sell"
             return f'Sell signal: {indicator_name} is negative ({value})'
         else:
@@ -86,10 +86,10 @@ def generate_signal(data):
         price = data.get('price')
 
         # Generate a signal based on the order type
-        if order_type == 'buy' and quantity > 50 and price > 500:
+        if order_type == 'buy' and quantity > 70 and price > 600:
             data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: Order book shows a buy order'
-        elif order_type == 'sell' and quantity > 50 and price < 500:
+        elif order_type == 'sell' and quantity > 70 and price < 400:
             data["final_signal"] = "Sell"
             return f'Sell signal for {stock_symbol}: Order book shows a sell order'
         else:
@@ -102,7 +102,7 @@ def generate_signal(data):
         pe_ratio = data.get('pe_ratio')
 
         # Generate a signal based on the market cap and P/E ratio
-        if market_cap > 1e11 and pe_ratio < 15:
+        if market_cap > 1e11 and pe_ratio < 12:
             data["final_signal"] = "Buy"
             return f'Buy signal for {stock_symbol}: High market cap ({market_cap}) and low P/E ratio ({pe_ratio})'
         elif market_cap < 1e10 or pe_ratio > 25:
