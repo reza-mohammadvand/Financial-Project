@@ -1,19 +1,35 @@
-from confluent_kafka import Consumer
+from confluent_kafka import Consumer, Producer
 import json
 import asyncio
 import websockets
 
+# Create Kafka producer instance
+producer_conf = {
+    'bootstrap.servers': 'localhost:9092', # Replace with your Kafka broker(s)
+}
+producer = Producer(producer_conf)
+
 
 def generate_signal(data):
+
     # Check the data type
     data_type = data.get('data_type')
 
     if data_type is None:
+
         # Get the stock symbol and indicators
         stock_symbol = data.get('stock_symbol')
         rsi = data.get('rsi')
         moving_average = data.get('moving_average')
         exponential_moving_average = data.get('exponential_moving_average')
+
+        data["rsi"] = round(data.get('rsi'), 2)
+        data["moving_average"] = round(data.get('moving_average'), 2)
+        data["exponential_moving_average"] = round(data.get('exponential_moving_average'), 2)
+        data["opening_price"] = round(data.get('opening_price'), 2)
+        data["high"] = round(data.get('high'), 2)
+        data["low"] = round(data.get('low'), 2)
+        data["closing_price"] = round(data.get('closing_price'), 2)
 
         # Generate a signal based on the RSI
         rsi_signal = 'Buy' if rsi < 40 else 'Sell' if rsi > 70 else 'Neutral'
@@ -50,6 +66,9 @@ def generate_signal(data):
         sentiment_score = data.get('sentiment_score')
         sentiment_magnitude = data.get('sentiment_magnitude')
 
+        data["sentiment_score"] = round(data.get('sentiment_score'), 2)
+        data["sentiment_magnitude"] = round(data.get('sentiment_magnitude'), 2)
+
         # Generate a signal based on the sentiment score
         if sentiment_score > 0.5 and sentiment_magnitude > 0.5:
             data["final_signal"] = "Buy"
@@ -66,6 +85,8 @@ def generate_signal(data):
         # Get the indicator name and value
         indicator_name = data.get('indicator_name')
         value = data.get('value')
+
+        data["value"] = round(data.get('value'), 2)
 
         # Generate a signal based on the economic indicator
         if indicator_name == 'GDP Growth Rate' and value > 3:
@@ -85,6 +106,8 @@ def generate_signal(data):
         quantity = data.get('quantity')
         price = data.get('price')
 
+        data["price"] = round(data.get('price'), 2)
+
         # Generate a signal based on the order type
         if order_type == 'buy' and quantity > 70 and price > 600:
             data["final_signal"] = "Buy"
@@ -101,6 +124,11 @@ def generate_signal(data):
         market_cap = data.get('market_cap')
         pe_ratio = data.get('pe_ratio')
 
+
+        market_cap_rouned = market_cap / 1000000000
+        data["market_cap"] = round(market_cap_rouned, 2)
+        data["pe_ratio"] = round(data.get('pe_ratio'), 2)
+
         # Generate a signal based on the market cap and P/E ratio
         if market_cap > 1e11 and pe_ratio < 12:
             data["final_signal"] = "Buy"
@@ -115,22 +143,23 @@ def generate_signal(data):
     else:
         # For other data types, no signal is generated
         return None
-
-# Set up Kafka consumer configuration
+    
 conf = {
-     'bootstrap.servers': 'localhost:9092', # Replace with your Kafka broker(s)
+     'bootstrap.servers': 'localhost:9092',
      'group.id': 'python-consumer',
      'auto.offset.reset': 'earliest'
 }
 
-# Create Kafka consumer instance
+producer_conf = {
+    'bootstrap.servers': 'localhost:9092',
+}
+producer = Producer(producer_conf)
+
 consumer = Consumer(conf)
 
-# Subscribe to the topic
 topic = 'Processed_data'
 consumer.subscribe([topic])
 
-# Continuously consume messages from Kafka and print them out
 async def time(websocket, path):
     while True:
         msg = consumer.poll(1.0)
@@ -141,16 +170,16 @@ async def time(websocket, path):
             print("Consumer error: {}".format(msg.error()))
             continue
 
-        # Parse the data
         data = json.loads(msg.value().decode('utf-8'))
 
-        # Generate a signal based on the data
         signal = generate_signal(data)
 
-        # Print the signal
         print(signal)
 
-        # Send the data to the client
+        if data["final_signal"] in ["Buy", "Sell"]:
+            producer.produce('alarm_topic', json.dumps(data))
+            producer.flush()
+
         await websocket.send(json.dumps(data))
         await asyncio.sleep(1)
 
@@ -160,3 +189,5 @@ asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
 
 consumer.close()
+
+    

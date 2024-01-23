@@ -451,13 +451,14 @@ div.ui-tabs-panel{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
   }
   .accordion-body div p:first-child{
     margin: 15px 0;
-    width: 70%;
+    width: 60%;
 }
 .accordion-body div p:last-child{
-    width: 30%;
+    width: 40%;
     margin: 15px 0;
 
 }

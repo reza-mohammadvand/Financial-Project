@@ -266,30 +266,50 @@ function createChart(chartId, volumeData, timeData, priceData, maData, emaData, 
         label: 'price',
         data: priceData, // This will be populated with your price data
         borderColor: 'rgba(75,192,192,1)',
-        type: 'line'
+        type: 'line',
+        lineTension: 0,
+        pointRadius: 3,
+        pointBorderWidth: 4,
+        fill: true,
       }, {
         label: 'MA',
         data: maData, // This will be populated with your moving average data
         borderColor: 'rgba(192,75,192,1)',
-        type: 'line'
+        type: 'line',
+        lineTension: 0,
+        pointRadius: 3,
+        pointBorderWidth: 4,
+        fill: true,
       }, {
         label: 'EMA',
         data: emaData, // This will be populated with your EMA data
         borderColor: 'rgba(192,192,75,1)',
-        type: 'line'
+        type: 'line',
+        lineTension: 0,
+        pointRadius: 3,
+        pointBorderWidth: 4,
+        fill: true,
       }, {
         label: 'RSI',
         data: rsiData, // This will be populated with your RSI data
         borderColor: 'rgba(75,75,192,1)',
-        type: 'line'
+        type: 'line',
+        lineTension: 0,
+        pointRadius: 3,
+        pointBorderWidth: 4,
+        fill: true,
       },{
         label: 'Volume',
         data: volumeData, // This will be populated with your volume data
         type: 'bar',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(0,0,0,0.4)',
         yAxisID: 'y-axis-volume',
         order: 1,
-        barPercentage: 0.3
+        barPercentage: 0.3,
+        lineTension: 0,
+        pointRadius: 3,
+        pointBorderWidth: 4,
+        fill: true,
       }
     ]
     },
@@ -339,10 +359,13 @@ function createChart(chartId, volumeData, timeData, priceData, maData, emaData, 
           },
           zoom: {
             enabled: true,
-            mode: 'x'
-          }
+            mode: 'xy',
+            drag: false,
+            wheel: true
+          }          
         }
-      },
+      }
+      ,
       legend: {
         display: true, // Hide the default legend
             },
@@ -437,6 +460,10 @@ function createSmallChart(chartId, priceData, timeData) {
               borderColor: 'rgba(75,192,192,1)',
               type: 'line',
               categoryPercentage: 2,
+              lineTension: 0,
+              pointRadius: 3,
+              pointBorderWidth: 4,
+              fill: true,
           }]
       },
       options: {
@@ -585,14 +612,16 @@ ws.onmessage = function (event) {
             pPriceOrder.textContent = 'Sentiment Score : ';
             pPriceOrder.appendChild(a);
             var b = document.createTextNode(jsonData.sentiment_magnitude);
-            pQuantity.textContent = 'Sentiment Magnitude : ';
+            pQuantity.textContent = 'Magnitude : ';
             pQuantity.appendChild(b);
           }
           if(jsonData.data_type=="market_data"){
             pClosePrice.textContent = 'Market Data';
             var a = document.createTextNode(jsonData.market_cap);
-            pPriceOrder.textContent = 'Market Cap : ';
+            var a1 = document.createTextNode(" B");;
+            pPriceOrder.textContent = `Market Cap : `;
             pPriceOrder.appendChild(a);
+            pPriceOrder.appendChild(a1);
             var b = document.createTextNode(jsonData.pe_ratio);
             pQuantity.textContent = 'P/E Ratio : ';
             pQuantity.appendChild(b);
@@ -807,6 +836,91 @@ ws.onmessage = function (event) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// /*=========================================
+// Multiple Line Chart
+// ===========================================*/
+// var line = document.getElementById("line").getContext("2d");
+
+// var gradientFill = line.createLinearGradient(0, 120, 0, 0);
+// gradientFill.addColorStop(0, "rgba(41,204,151,0.10196)");
+// gradientFill.addColorStop(1, "rgba(41,204,151,0.30196)");
+
+// var lChart = new Chart(line, {
+//     type: 'line',
+//     data: {
+//       labels:["Fri","Sat", "Sun", "Mon", "Tue", "Wed", "Thu"],
+//       datasets: [{
+//       label: "My First dataset",
+//       lineTension: 0,
+//       pointRadius: 4,
+//       pointBackgroundColor: 'rgba(255,255,255,1)',
+//       pointBorderWidth: 2,
+//       fill: true,
+//       backgroundColor: gradientFill,
+//       borderColor: '#29cc97',
+//       borderWidth: 2,
+//       data: [0,4, 3, 5.5, 3, 4.7, 1]
+//     }]
+//     },
+//     options: {
+//       legend: {
+//          display: false
+//        },
+//       scales: {
+//        xAxes: [{
+//          gridLines: {
+//            drawBorder: false,
+//            display:false
+//          },
+//          ticks: {
+//            display:false, // hide main x-axis line
+//            beginAtZero:true
+//          },
+//          barPercentage: 1.8,
+//          categoryPercentage: 0.2
+//        }],
+//        yAxes: [{
+//          gridLines: {
+//            drawBorder: false, // hide main y-axis line
+//            display:false
+//          },
+//          ticks: {
+//           display:false,
+//           beginAtZero:true
+//          },
+//        }]
+//       },
+//       tooltips: {
+//        enabled: false
+//       }
+//    }
+// });
 
 
 
