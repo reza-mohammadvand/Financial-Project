@@ -794,7 +794,7 @@ ws.onmessage = function (event) {
       if(jsonData.stock_symbol == "AAPL"){
         document.getElementById("AAPL-Signal").prepend(divItemCopy);
         addData(AAPL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
-        var AAPLsmallChart = createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
+        createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "GOOGL"){
@@ -832,96 +832,29 @@ ws.onmessage = function (event) {
 
 
 
+function showBox(sel) {
+  var boxes = document.getElementById("trade").querySelectorAll('.symbol-trade');
+  boxes.forEach(function(box) {
+    box.style.display = 'none';
+  });
+  
+  var selectedBox = document.getElementById(sel.value);
+  if (selectedBox) {
+    selectedBox.style.display = 'block';
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /*=========================================
-// Multiple Line Chart
-// ===========================================*/
-// var line = document.getElementById("line").getContext("2d");
-
-// var gradientFill = line.createLinearGradient(0, 120, 0, 0);
-// gradientFill.addColorStop(0, "rgba(41,204,151,0.10196)");
-// gradientFill.addColorStop(1, "rgba(41,204,151,0.30196)");
-
-// var lChart = new Chart(line, {
-//     type: 'line',
-//     data: {
-//       labels:["Fri","Sat", "Sun", "Mon", "Tue", "Wed", "Thu"],
-//       datasets: [{
-//       label: "My First dataset",
-//       lineTension: 0,
-//       pointRadius: 4,
-//       pointBackgroundColor: 'rgba(255,255,255,1)',
-//       pointBorderWidth: 2,
-//       fill: true,
-//       backgroundColor: gradientFill,
-//       borderColor: '#29cc97',
-//       borderWidth: 2,
-//       data: [0,4, 3, 5.5, 3, 4.7, 1]
-//     }]
-//     },
-//     options: {
-//       legend: {
-//          display: false
-//        },
-//       scales: {
-//        xAxes: [{
-//          gridLines: {
-//            drawBorder: false,
-//            display:false
-//          },
-//          ticks: {
-//            display:false, // hide main x-axis line
-//            beginAtZero:true
-//          },
-//          barPercentage: 1.8,
-//          categoryPercentage: 0.2
-//        }],
-//        yAxes: [{
-//          gridLines: {
-//            drawBorder: false, // hide main y-axis line
-//            display:false
-//          },
-//          ticks: {
-//           display:false,
-//           beginAtZero:true
-//          },
-//        }]
-//       },
-//       tooltips: {
-//        enabled: false
-//       }
-//    }
-// });
-
+function changeBackground(radio, color) {
+  var boxes = document.querySelectorAll('div');
+  boxes.forEach(function(box) {
+    box.style.backgroundColor = '';
+  });
+  
+  if (radio.checked) {
+    var box = document.getElementById('box' + radio.id.charAt(radio.id.length-1));
+    box.style.backgroundColor = color;
+  }
+}
 
 
 
