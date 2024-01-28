@@ -510,7 +510,7 @@ div.ui-tabs-panel{
     position: relative;
 }
 
-.chartWrapper::-webkit-scrollbar,body::-webkit-scrollbar {
+.chartWrapper::-webkit-scrollbar,body::-webkit-scrollbar,#Trade-AAPL div::-webkit-scrollbar, #Trade-GOOGL div::-webkit-scrollbar, #Trade-MSFT div::-webkit-scrollbar, #Trade-AMZN div::-webkit-scrollbar, #Trade-TSLA div::-webkit-scrollbar {
     padding: 2px;
     border-radius: 10px;
     width: 10px;
@@ -518,7 +518,7 @@ div.ui-tabs-panel{
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.chartWrapper::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb {
+.chartWrapper::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb,#Trade-AAPL div::-webkit-scrollbar-thumb, #Trade-GOOGL div::-webkit-scrollbar-thumb, #Trade-MSFT div::-webkit-scrollbar-thumb, #Trade-AMZN div::-webkit-scrollbar-thumb, #Trade-TSLA div::-webkit-scrollbar-thumb{
     border-radius: 18px;
     background: rgb(72 72 72);
 }
@@ -663,7 +663,7 @@ margin-top: 20px;
 }
 
 #trade form{
-    margin-bottom: 40px;
+    margin-bottom: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -700,4 +700,27 @@ margin-top: 20px;
 }
 .buy-sell{
     width: 100%!important;
+}
+
+#AAPL, #GOOGL, #MSFT, #AMZN, #TSLA{
+    width: 40%;
+    float: left;
+}
+
+#Trade-AAPL, #Trade-GOOGL, #Trade-MSFT, #Trade-AMZN, #Trade-TSLA{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.symbol-trade table{
+    overflow: auto;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+}
+
+.symbol-trade table tr{
+    padding: 13px 25px !important;
 }

@@ -651,22 +651,27 @@ ws.onmessage = function (event) {
             var divItemCopy = divItem.cloneNode(true);
             if(jsonData.stock_symbol == "AAPL"){
               document.getElementById("AAPL-Signal").prepend(divItemCopy);
+              updateChart('AAPL', jsonData.final_signal);
             }
             divItemCopy = divItem.cloneNode(true);
             if(jsonData.stock_symbol == "GOOGL"){
               document.getElementById("GOOGL-Signal").prepend(divItemCopy);
+              updateChart('GOOGL', jsonData.final_signal);
             }
             divItemCopy = divItem.cloneNode(true);
             if(jsonData.stock_symbol == "AMZN"){
               document.getElementById("AMZN-Signal").prepend(divItemCopy);
+              updateChart('AMZN', jsonData.final_signal);
             }
             divItemCopy = divItem.cloneNode(true);
             if(jsonData.stock_symbol == "MSFT"){
               document.getElementById("MSFT-Signal").prepend(divItemCopy);
+              updateChart('MSFT', jsonData.final_signal);
             }
             divItemCopy = divItem.cloneNode(true);
             if(jsonData.stock_symbol == "TSLA"){
               document.getElementById("TSLA-Signal").prepend(divItemCopy);
+              updateChart('TSLA', jsonData.final_signal);
             }
           }
           
@@ -795,30 +800,40 @@ ws.onmessage = function (event) {
         document.getElementById("AAPL-Signal").prepend(divItemCopy);
         addData(AAPL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
+        updateChart('AAPL', jsonData.final_signal);
+        updateTable('AAPL', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "GOOGL"){
         document.getElementById("GOOGL-Signal").prepend(divItemCopy);
         addData(GOOGL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('GOOGLsmallChart', GOOGLpriceData, GOOGLtimeData);
+        updateChart('GOOGL', jsonData.final_signal);
+        updateTable('GOOGL', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "AMZN"){
         document.getElementById("AMZN-Signal").prepend(divItemCopy);
         addData(AMZN_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('AMZNsmallChart', AMZNpriceData, AMZNtimeData);
+        updateChart('AMZN', jsonData.final_signal);
+        updateTable('AMZN', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "MSFT"){
         document.getElementById("MSFT-Signal").prepend(divItemCopy);
         addData(MSFT_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('MSFTsmallChart', MSFTpriceData, MSFTtimeData);
+        updateChart('MSFT', jsonData.final_signal);
+        updateTable('MSFT', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "TSLA"){
         document.getElementById("TSLA-Signal").prepend(divItemCopy);
         addData(TSLA_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('TSLAsmallChart', TSLApriceData, TSLApriceData);
+        updateChart('TSLA', jsonData.final_signal);
+        updateTable('TSLA', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
       }
     
       if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
@@ -831,7 +846,7 @@ ws.onmessage = function (event) {
 };
 
 
-
+// trade box
 function showBox(sel) {
   var boxes = document.getElementById("trade").querySelectorAll('.symbol-trade');
   boxes.forEach(function(box) {
@@ -840,7 +855,7 @@ function showBox(sel) {
   
   var selectedBox = document.getElementById(sel.value);
   if (selectedBox) {
-    selectedBox.style.display = 'block';
+    selectedBox.style.display = 'flex';
   }
 }
 
@@ -854,6 +869,96 @@ function changeBackground(radio, color) {
     var box = document.getElementById('box' + radio.id.charAt(radio.id.length-1));
     box.style.backgroundColor = color;
   }
+}
+
+
+
+// cyrcle chart
+
+let charts = {};
+
+function initCharts(symbols) {
+    symbols.forEach(symbol => {
+        let ctx = document.getElementById(symbol).getContext('2d');
+        charts[symbol] = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Buy', 'Sell', 'Neutral'],
+                datasets: [{
+                    data: [0, 0, 0],
+                    backgroundColor: ['Green', 'Red', 'Grey'],
+                    hoverBackgroundColor: ['LightGreen', 'LightCoral', 'LightGrey'],
+                    hoverBorderColor: 'rgba(234, 236, 244, 1)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,  // Add this line
+                title: {
+                    display: true,
+                    text: `Final Signals for ${symbol}`,
+                    fontSize: 14
+                },
+                legend: {
+                    labels: {
+                        fontSize: 14
+                    }
+                },
+                tooltips: {
+                    titleFontSize: 14,
+                    bodyFontSize: 14,
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+            }
+        });
+    });
+}
+
+
+function updateChart(stock_symbol, final_signal) {
+    let chart = charts[stock_symbol];
+    if (final_signal === 'Buy') {
+        chart.data.datasets[0].data[0]++;
+    } else if (final_signal === 'Sell') {
+        chart.data.datasets[0].data[1]++;
+    } else if (final_signal === 'Neutral') {
+        chart.data.datasets[0].data[2]++;
+    }
+    chart.update();
+}
+
+// Initialize the charts
+initCharts(['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']);
+
+
+
+// table
+let lastPrices = {};
+
+function updateTable(stock_symbol, final_signal, final_price, volume) {
+  // Calculate the percentage change
+  let percentage_change = 0;
+  if (lastPrices[stock_symbol]) {
+      percentage_change = ((final_price - lastPrices[stock_symbol]) / lastPrices[stock_symbol]) * 100;
+  }
+  lastPrices[stock_symbol] = final_price;
+
+  // Update the table
+  let table = document.getElementById(stock_symbol + '-table').getElementsByTagName('tbody')[0];
+  let newRow = table.insertRow(0);
+  newRow.innerHTML = `
+      <td>${final_price}</td>
+      <td>${final_signal}</td>
+      <td>${volume}</td>
+      <td style="color: ${percentage_change >= 0 ? 'green' : 'red'}">${percentage_change.toFixed(2)}%</td>
+  `;
 }
 
 

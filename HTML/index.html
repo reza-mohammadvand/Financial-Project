@@ -79,7 +79,7 @@
       </div>
       <div id="tabs-3">
         <div class="tab-title">Signaling system</div>
-        <div id="trade" class="accordion js-accordion" style="width: 85%;">
+        <div id="trade" class="accordion js-accordion" style="width: 90%;">
           <select id="mySelect" onchange="showBox(this)">
             <option value="Trade-AAPL" selected>AAPL</option>
             <option value="Trade-GOOGL">GOOGL</option>
@@ -122,11 +122,101 @@
               <button style="margin-top: 40px; font-size: 20px; width: 55%; padding: 12px 0; float: left;" type="button" class="btn btn-outline-success">Submit</button>
             </div>
             </form>
-          <div id="Trade-AAPL" class="symbol-trade" style="display: block;">بالب</div>
-          <div id="Trade-GOOGL" class="symbol-trade" style="display: none;">This is Box 2</div>
-          <div id="Trade-AMZN" class="symbol-trade" style="display: none;">This is Box 3</div>
-          <div id="Trade-MSFT" class="symbol-trade" style="display: none;">This is Box 2</div>
-          <div id="Trade-TSLA" class="symbol-trade" style="display: none;">This is Box 3</div>
+          <div id="Trade-AAPL" class="symbol-trade" style="display: flex;">
+            <div style="width: 540px; height: 348px;">
+            <canvas id="AAPL"></canvas>
+            </div>
+            <div style="overflow-y: auto; height: 500px; width: 56%;">
+            <table id="AAPL-table" class="table table-dark table-hover">
+              <thead>
+                  <tr>
+                      <th>Final Price</th>
+                      <th>Final Signal</th>
+                      <th>Volume</th>
+                      <th>Change</th>
+                  </tr>
+              </thead>
+              <tbody>
+              </tbody>
+          </table>   
+            </div>
+          </div>
+          <div id="Trade-GOOGL" class="symbol-trade" style="display: none;">
+            <div style="width: 540px; height: 348px;">
+              <canvas id="GOOGL"></canvas>
+            </div>
+            <div style="overflow-y: auto; height: 500px; width: 56%;">
+              <table id="GOOGL-table" class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>Final Price</th>
+                        <th>Final Signal</th>
+                        <th>Volume</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>            
+          </div>
+          <div id="Trade-AMZN" class="symbol-trade" style="display: none;">
+            <div style="width: 540px; height: 348px;">
+              <canvas id="AMZN"></canvas>
+            </div>
+            <div style="overflow-y: auto; height: 500px; width: 56%;">
+              <table id="AMZN-table" class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>Final Price</th>
+                        <th>Final Signal</th>
+                        <th>Volume</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div> 
+          </div>
+          <div id="Trade-MSFT" class="symbol-trade" style="display: none;">
+            <div style="width: 540px; height: 348px;">
+              <canvas id="MSFT"></canvas>
+            </div>
+            <div style="overflow-y: auto; height: 500px; width: 56%;">
+              <table id="MSFT-table" class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>Final Price</th>
+                        <th>Final Signal</th>
+                        <th>Volume</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>  
+          </div>
+          <div id="Trade-TSLA" class="symbol-trade" style="display: none;">
+            <div style="width: 540px; height: 348px;">
+              <canvas id="TSLA"></canvas> 
+            </div>
+            <div style="overflow-y: auto; height: 500px; width: 56%;">
+              <table id="TSLA-table" class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>Final Price</th>
+                        <th>Final Signal</th>
+                        <th>Volume</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            </div>            
+          </div>
           
         </div>
       </div>
