@@ -801,7 +801,7 @@ ws.onmessage = function (event) {
         addData(AAPL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
         updateChart('AAPL', jsonData.final_signal);
-        updateTable('AAPL', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
+        updateTable('AAPL', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "GOOGL"){
@@ -809,7 +809,7 @@ ws.onmessage = function (event) {
         addData(GOOGL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('GOOGLsmallChart', GOOGLpriceData, GOOGLtimeData);
         updateChart('GOOGL', jsonData.final_signal);
-        updateTable('GOOGL', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
+        updateTable('GOOGL', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "AMZN"){
@@ -817,7 +817,7 @@ ws.onmessage = function (event) {
         addData(AMZN_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('AMZNsmallChart', AMZNpriceData, AMZNtimeData);
         updateChart('AMZN', jsonData.final_signal);
-        updateTable('AMZN', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
+        updateTable('AMZN', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "MSFT"){
@@ -825,7 +825,7 @@ ws.onmessage = function (event) {
         addData(MSFT_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('MSFTsmallChart', MSFTpriceData, MSFTtimeData);
         updateChart('MSFT', jsonData.final_signal);
-        updateTable('MSFT', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
+        updateTable('MSFT', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
       }
       divItemCopy = divItem.cloneNode(true);
       if(jsonData.stock_symbol == "TSLA"){
@@ -833,7 +833,7 @@ ws.onmessage = function (event) {
         addData(TSLA_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
         createSmallChart('TSLAsmallChart', TSLApriceData, TSLApriceData);
         updateChart('TSLA', jsonData.final_signal);
-        updateTable('TSLA', jsonData.final_signal, jsonData.closing_price, jsonData.volume);
+        updateTable('TSLA', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
       }
     
       if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
@@ -942,7 +942,7 @@ initCharts(['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']);
 // table
 let lastPrices = {};
 
-function updateTable(stock_symbol, final_signal, final_price, volume) {
+function updateTable(stock_symbol, final_signal, final_price, volume,time) {
   // Calculate the percentage change
   let percentage_change = 0;
   if (lastPrices[stock_symbol]) {
@@ -958,8 +958,7 @@ function updateTable(stock_symbol, final_signal, final_price, volume) {
       <td>${final_signal}</td>
       <td>${volume}</td>
       <td style="color: ${percentage_change >= 0 ? 'green' : 'red'}">${percentage_change.toFixed(2)}%</td>
+      <td>${time}</td>
   `;
 }
-
-
 

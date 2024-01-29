@@ -102,7 +102,7 @@ html,body{
     color: #939393;
     font-size: 48px;
     text-shadow: 0px 0px 2px #939393;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     position: relative;
 }
 .main .header #clock{
@@ -276,7 +276,7 @@ html,body{
     left: 50px;
     position: fixed;
     margin-top: 0;
-    padding: 25px;
+    padding: 25px 25px 5px;
     list-style: none;
     width: 14%;
     background-color: #27293d;
@@ -333,6 +333,7 @@ html,body{
 }
 
 div.ui-tabs-panel{
+    margin-bottom: 30px;
     width: 77%;
     padding: 60px 25px;
     list-style: none;
@@ -491,9 +492,9 @@ div.ui-tabs-panel{
   }
 
   .tab-title{
-    right: 470px;
+    right: 445px;
     padding-top: 13px;
-    top: 75px;
+    top: 65px;
     position: absolute;
     width: 600px;
     height: 80px;
@@ -653,32 +654,35 @@ margin-top: 20px;
     text-align: center;
 }
 #mySelect option{
+    background: #bdbdbd;
+    padding: 5px 10px;
     color: #333;
 }
 
 .buy-sell label{
     font-size: 22px;
     margin-right: 30px;
-    padding: 8px 57px;
+    padding: 7px 22px 10px;
 }
 
 #trade form{
+    width: 50%;
     margin-bottom: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 #trade form div{ 
     justify-content: left;
     align-items: center;
     display: flex;
-    width: 44%;
+    width: 100%;
     margin-bottom: 30px;
     padding: 0 30px;
 }
 #trade form div label{
-    width: 135px; 
+    width: 170px; 
 }
 .no-spinner::-webkit-inner-spin-button,
 .no-spinner::-webkit-outer-spin-button {
@@ -713,7 +717,13 @@ margin-top: 20px;
     justify-content: space-between;
     align-items: flex-start;
 }
-
+.cyrcle-chart{
+    top: 132px;
+    position: absolute;
+    width: 540px;
+    height: 348px;
+    right: 0;
+}
 .symbol-trade table{
     overflow: auto;
     width: 100%;
@@ -723,4 +733,9 @@ margin-top: 20px;
 
 .symbol-trade table tr{
     padding: 13px 25px !important;
+}
+
+
+#AAPLChart,#GOOGLChart,#MSFTChart,#AMZNChart,#TSLAChart{
+    width: 100%;
 }
