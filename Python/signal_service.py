@@ -3,10 +3,12 @@ import json
 import asyncio
 import websockets
 
-# Create Kafka producer instance
+# Set up Kafka producer configuration
 producer_conf = {
     'bootstrap.servers': 'localhost:9092', # Replace with your Kafka broker(s)
 }
+
+# Create Kafka producer instance
 producer = Producer(producer_conf)
 
 
@@ -150,10 +152,6 @@ conf = {
      'auto.offset.reset': 'earliest'
 }
 
-producer_conf = {
-    'bootstrap.servers': 'localhost:9092',
-}
-producer = Producer(producer_conf)
 
 consumer = Consumer(conf)
 
@@ -177,7 +175,7 @@ async def time(websocket, path):
         print(signal)
 
         if data["final_signal"] in ["Buy", "Sell"]:
-            producer.produce('alarm_topic', json.dumps(data))
+            producer.produce('alarm_topic', signal)
             producer.flush()
 
         await websocket.send(json.dumps(data))

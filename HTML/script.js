@@ -1,29 +1,29 @@
 
 // main tabs
 $( function() {
-    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+  $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+  $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
 } );
 
 
 
 // Clock
 function startTime() {
-    const today = new Date();
-    let h = today.getHours();
-    let m = today.getMinutes();
-    let s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
-    setTimeout(startTime, 1000);
-  }
-  
-  function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-    return i;
-  }
-  startTime()
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+startTime()
 
 
 
@@ -33,46 +33,46 @@ var $accordion = $('.js-accordion');
 
 // default settings
 var settings = {
-  // animation speed
-  speed: 400,  // Changed 'Speed' to 'speed'
- 
-  // close all other accordion items if true
-  oneOpen: false
+// animation speed
+speed: 400,  // Changed 'Speed' to 'speed'
+
+// close all other accordion items if true
+oneOpen: false
 };
 
 var accordion = {
-  // pass configurable object literal
-  init: function($settings) {
-    var $accordion_header = $accordion.find('.js-accordion-header');
-    $accordion_header.on('click', function() {
-      accordion.toggle($(this));
-    });
-   
-    $.extend(settings, $settings);
-   
-    // ensure only one accordion is active if oneOpen is true
-    if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
-      $('.js-accordion-item.active:not(:first)').removeClass('active');
-    }
-   
-    // reveal the active accordion bodies
-    $('.js-accordion-item.active').find('> .js-accordion-body').show();
-  },
-  toggle: function($this) {
-    var $accordion_item = $('.js-accordion-item');
-         
-    if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0] ) {
-      $this.closest('.js-accordion')
-             .find('> .js-accordion-item')
-             .removeClass('active')
-             .find('.js-accordion-body')
-             .slideUp()
-    }
-   
-    // show/hide the clicked accordion item
-    $this.closest('.js-accordion-item').toggleClass('active');
-    $this.next().stop().slideToggle(settings.speed);
+// pass configurable object literal
+init: function($settings) {
+  var $accordion_header = $accordion.find('.js-accordion-header');
+  $accordion_header.on('click', function() {
+    accordion.toggle($(this));
+  });
+ 
+  $.extend(settings, $settings);
+ 
+  // ensure only one accordion is active if oneOpen is true
+  if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
+    $('.js-accordion-item.active:not(:first)').removeClass('active');
   }
+ 
+  // reveal the active accordion bodies
+  $('.js-accordion-item.active').find('> .js-accordion-body').show();
+},
+toggle: function($this) {
+  var $accordion_item = $('.js-accordion-item');
+       
+  if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0] ) {
+    $this.closest('.js-accordion')
+           .find('> .js-accordion-item')
+           .removeClass('active')
+           .find('.js-accordion-body')
+           .slideUp()
+  }
+ 
+  // show/hide the clicked accordion item
+  $this.closest('.js-accordion-item').toggleClass('active');
+  $this.next().stop().slideToggle(settings.speed);
+}
 }
 
 // Call the function manually whenever you need it
@@ -83,51 +83,33 @@ accordion.init({ speed: 300, oneOpen: true });
 
 
 $(document).ready(function() {
-  // Add click event listener to all .accordion-header elements
-  $(document).on('click', '.accordion-header', function() {
-    var $accordionBody = $(this).closest('.accordion-item').find('.accordion-body');
+// Add click event listener to all .accordion-header elements
+$(document).on('click', '.accordion-header', function() {
+  var $accordionBody = $(this).closest('.accordion-item').find('.accordion-body');
 
-    // Close all .accordion-body elements
-    $('.accordion-body').not($accordionBody).slideUp();
+  // Close all .accordion-body elements
+  $('.accordion-body').not($accordionBody).slideUp();
 
-    // Toggle the .accordion-body element within the same .accordion-item as the clicked .accordion-header
-    $accordionBody.slideToggle();
-  });
+  // Toggle the .accordion-body element within the same .accordion-item as the clicked .accordion-header
+  $accordionBody.slideToggle();
+});
 });
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // bell
+// bell
 
 function shakeBell() {
-    $("#bell-icon").css({
-        "animation": "rotation 0.2s linear",
-        "animation-iteration-count": "5" // Run the animation 3 times
-    }); // Apply the rotation animation
-    setTimeout(function(){ 
-        $("#bell-icon").css({
-            "animation": "",
-            "animation-iteration-count": ""
-        }); 
-    }, 1500); // Remove the animation after 1.5s (0.5s * 3)
+  $("#bell-icon").css({
+      "animation": "rotation 0.2s linear",
+      "animation-iteration-count": "5" // Run the animation 3 times
+  }); // Apply the rotation animation
+  setTimeout(function(){ 
+      $("#bell-icon").css({
+          "animation": "",
+          "animation-iteration-count": ""
+      }); 
+  }, 1500); // Remove the animation after 1.5s (0.5s * 3)
 }
 
 
@@ -136,22 +118,22 @@ var badgeNum;
 var badge;
 
 function updateBadge() {
-    badge = document.getElementById('badge');
-    var alertNum = i++;
-    
-    var badgeChild = badge.children[0];
-    if(badgeChild.className === 'badge-num')
-        badge.removeChild(badge.children[0]);
+  badge = document.getElementById('badge');
+  var alertNum = i++;
+  
+  var badgeChild = badge.children[0];
+  if(badgeChild.className === 'badge-num')
+      badge.removeChild(badge.children[0]);
 
-    badgeNum = document.createElement('div'); 
-    badgeNum.setAttribute('class','badge-num');
-    badgeNum.innerText = alertNum;
-    var insertedElement = badge.insertBefore(badgeNum, badge.firstChild); 
+  badgeNum = document.createElement('div'); 
+  badgeNum.setAttribute('class','badge-num');
+  badgeNum.innerText = alertNum;
+  var insertedElement = badge.insertBefore(badgeNum, badge.firstChild); 
 }
 
 function resetNumber() {
-    i = 0;
-    updateBadge()
+  i = 0;
+  updateBadge()
 }
 
 
@@ -164,49 +146,49 @@ var visible = false;
 var queue = [];
 
 function createNotification() {
-    notification = document.createElement('div');
-    var btn = document.createElement('button');
-    var msg = document.createElement('div');
-    btn.className = 'notification-close';
-    msg.className = 'notification-message';
-    btn.addEventListener('click', hideNotification, false);
-    notification.addEventListener('animationend', hideNotification, false);
-    notification.addEventListener('webkitAnimationEnd', hideNotification, false);
-    notification.appendChild(btn);
-    notification.appendChild(msg);
+  notification = document.createElement('div');
+  var btn = document.createElement('button');
+  var msg = document.createElement('div');
+  btn.className = 'notification-close';
+  msg.className = 'notification-message';
+  btn.addEventListener('click', hideNotification, false);
+  notification.addEventListener('animationend', hideNotification, false);
+  notification.addEventListener('webkitAnimationEnd', hideNotification, false);
+  notification.appendChild(btn);
+  notification.appendChild(msg);
 }
 
 function updateNotification(type, signal,symbol) {
-    notification.className = 'notification notification-' + type;
-    notification.style.background = "#1fb74c"
-    if (signal =="Sell") {
-    notification.style.background = "#e91e63"
-    }
-    message = "You have a new "+signal+" signal on "+symbol
-    notification.querySelector('.notification-message').innerHTML = message;
+  notification.className = 'notification notification-' + type;
+  notification.style.background = "#1fb74c"
+  if (signal =="Sell") {
+  notification.style.background = "#e91e63"
+  }
+  message = "You have a new "+signal+" signal on "+symbol
+  notification.querySelector('.notification-message').innerHTML = message;
 }
 
 function showNotification(type, signal,symbol) {
-    if (visible) {
-        queue.push([type, signal,symbol]);
-        return;
-    }
-    if (!notification) {
-        createNotification();
-    }
-    updateNotification(type, signal,symbol);
-    body.appendChild(notification);
-    visible = true;
+  if (visible) {
+      queue.push([type, signal,symbol]);
+      return;
+  }
+  if (!notification) {
+      createNotification();
+  }
+  updateNotification(type, signal,symbol);
+  body.appendChild(notification);
+  visible = true;
 }
 
 function hideNotification() {
-    if (visible) {
-        visible = false;
-        body.removeChild(notification);
-        if (queue.length) {
-            showNotification.apply(null, queue.shift());
-        }
-    } 
+  if (visible) {
+      visible = false;
+      body.removeChild(notification);
+      if (queue.length) {
+          showNotification.apply(null, queue.shift());
+      }
+  } 
 }
 
 
@@ -218,29 +200,29 @@ function hideNotification() {
 var list = [["AAPL","#tabs-3"],["GOOGL","#tabs-4"],["AMZN","#tabs-5"],["MSFT","#tabs-6"],["TSLA","#tabs-7"]];
 
 $(document).ready(function() {
-  $('#searchInput').on('input', function() {
-      var input = $(this).val().toLowerCase();
+$('#searchInput').on('input', function() {
+    var input = $(this).val().toLowerCase();
 
-      // If the input is empty, hide the list
-      if (input === '') {
-          $('#list').hide();
-          return;
-      }
+    // If the input is empty, hide the list
+    if (input === '') {
+        $('#list').hide();
+        return;
+    }
 
-      var result = list.filter(item => item[0].toLowerCase().includes(input));
+    var result = list.filter(item => item[0].toLowerCase().includes(input));
 
-      // Clear the current list
-      $('#list').empty();
+    // Clear the current list
+    $('#list').empty();
 
-      // Add the search results to the list
-      result.forEach(item => {
-          var a = $('<a>').text(item[0]).attr('href', item[1]);
-          var li = $('<li>').append(a).hide().appendTo('#list').slideDown(200);
-      });
+    // Add the search results to the list
+    result.forEach(item => {
+        var a = $('<a>').text(item[0]).attr('href', item[1]);
+        var li = $('<li>').append(a).hide().appendTo('#list').slideDown(200);
+    });
 
-      // Show the list
-      $('#list').show();
-  });
+    // Show the list
+    $('#list').show();
+});
 });
 
 
@@ -250,129 +232,129 @@ $(document).ready(function() {
 
 // Create Charts
 function createChart(chartId, volumeData, timeData, priceData, maData, emaData, rsiData) {
-  
-  var total = volumeData.reduce((a, b) => a + b, 0);
-  var average = volumeData.length > 0 ? total / volumeData.length : 5000;  // Set a default 
 
-  var numDataPoints = 15; // The number of data points
-  var pointWidth = 80; // The width of each data point in px
-  document.getElementById(chartId).width = numDataPoints * pointWidth;
+var total = volumeData.reduce((a, b) => a + b, 0);
+var average = volumeData.length > 0 ? total / volumeData.length : 5000;  // Set a default 
 
-  const myChart = new Chart(chartId, {
-    type: "bar",
-    data: {
-      labels: timeData, // This will be populated with your time data
-      datasets: [{
-        label: 'price',
-        data: priceData, // This will be populated with your price data
-        borderColor: 'rgba(75,192,192,1)',
-        type: 'line',
-        lineTension: 0,
-        pointRadius: 3,
-        pointBorderWidth: 4,
-        fill: true,
-      }, {
-        label: 'MA',
-        data: maData, // This will be populated with your moving average data
-        borderColor: 'rgba(192,75,192,1)',
-        type: 'line',
-        lineTension: 0,
-        pointRadius: 3,
-        pointBorderWidth: 4,
-        fill: true,
-      }, {
-        label: 'EMA',
-        data: emaData, // This will be populated with your EMA data
-        borderColor: 'rgba(192,192,75,1)',
-        type: 'line',
-        lineTension: 0,
-        pointRadius: 3,
-        pointBorderWidth: 4,
-        fill: true,
-      }, {
-        label: 'RSI',
-        data: rsiData, // This will be populated with your RSI data
-        borderColor: 'rgba(75,75,192,1)',
-        type: 'line',
-        lineTension: 0,
-        pointRadius: 3,
-        pointBorderWidth: 4,
-        fill: true,
-      },{
-        label: 'Volume',
-        data: volumeData, // This will be populated with your volume data
-        type: 'bar',
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        yAxisID: 'y-axis-volume',
-        order: 1,
-        barPercentage: 0.3,
-        lineTension: 0,
-        pointRadius: 3,
-        pointBorderWidth: 4,
-        fill: true,
-      }
-    ]
-    },
-    options: {
-      responsive: false,
-      scales: {
-        yAxes: [{
-          type: 'linear',
-          display: true,
-          position: 'right', // Change this to 'left' to move the price axis to the left
-          id: 'y-axis-1',
-        }, 
-        {
-          id: 'y-axis-volume',
-          type: 'linear',
-          display: false, // Set this to false to hide the volume axis
-          position: 'right',
-          gridLines: {
-            drawOnChartArea: false
-          },
-          ticks: {
-            min: average / 2, // half the average
-            max: average * 4, // forth the average
-          }
-        }   
-      ],
-      },
-      tooltips: {
-        mode: 'index',
-        intersect: false,
-        callbacks: {
-          label: function(tooltipItem, data) {
-            var label = data.datasets[tooltipItem.datasetIndex].label || '';
-            if (label) {
-              label += ': ';
-            }
-            label += tooltipItem.yLabel;
-            return label;
-          },
-        }
-      },
-      plugins: {
-        zoom: {
-          pan: {
-            enabled: true,
-            mode: 'x'
-          },
-          zoom: {
-            enabled: true,
-            mode: 'xy',
-            drag: false,
-            wheel: true
-          }          
-        }
-      }
-      ,
-      legend: {
-        display: true, // Hide the default legend
-            },
+var numDataPoints = 15; // The number of data points
+var pointWidth = 80; // The width of each data point in px
+document.getElementById(chartId).width = numDataPoints * pointWidth;
+
+const myChart = new Chart(chartId, {
+  type: "bar",
+  data: {
+    labels: timeData, // This will be populated with your time data
+    datasets: [{
+      label: 'price',
+      data: priceData, // This will be populated with your price data
+      borderColor: 'rgba(75,192,192,1)',
+      type: 'line',
+      lineTension: 0,
+      pointRadius: 3,
+      pointBorderWidth: 4,
+      fill: true,
+    }, {
+      label: 'MA',
+      data: maData, // This will be populated with your moving average data
+      borderColor: 'rgba(192,75,192,1)',
+      type: 'line',
+      lineTension: 0,
+      pointRadius: 3,
+      pointBorderWidth: 4,
+      fill: true,
+    }, {
+      label: 'EMA',
+      data: emaData, // This will be populated with your EMA data
+      borderColor: 'rgba(192,192,75,1)',
+      type: 'line',
+      lineTension: 0,
+      pointRadius: 3,
+      pointBorderWidth: 4,
+      fill: true,
+    }, {
+      label: 'RSI',
+      data: rsiData, // This will be populated with your RSI data
+      borderColor: 'rgba(75,75,192,1)',
+      type: 'line',
+      lineTension: 0,
+      pointRadius: 3,
+      pointBorderWidth: 4,
+      fill: true,
+    },{
+      label: 'Volume',
+      data: volumeData, // This will be populated with your volume data
+      type: 'bar',
+      backgroundColor: 'rgba(0,0,0,0.4)',
+      yAxisID: 'y-axis-volume',
+      order: 1,
+      barPercentage: 0.3,
+      lineTension: 0,
+      pointRadius: 3,
+      pointBorderWidth: 4,
+      fill: true,
     }
-  });
+  ]
+  },
+  options: {
+    responsive: false,
+    scales: {
+      yAxes: [{
+        type: 'linear',
+        display: true,
+        position: 'right', // Change this to 'left' to move the price axis to the left
+        id: 'y-axis-1',
+      }, 
+      {
+        id: 'y-axis-volume',
+        type: 'linear',
+        display: false, // Set this to false to hide the volume axis
+        position: 'right',
+        gridLines: {
+          drawOnChartArea: false
+        },
+        ticks: {
+          min: average / 2, // half the average
+          max: average * 4, // forth the average
+        }
+      }   
+    ],
+    },
+    tooltips: {
+      mode: 'index',
+      intersect: false,
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var label = data.datasets[tooltipItem.datasetIndex].label || '';
+          if (label) {
+            label += ': ';
+          }
+          label += tooltipItem.yLabel;
+          return label;
+        },
+      }
+    },
+    plugins: {
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: 'x'
+        },
+        zoom: {
+          enabled: true,
+          mode: 'xy',
+          drag: false,
+          wheel: true
+        }          
+      }
+    }
+    ,
+    legend: {
+      display: true, // Hide the default legend
+          },
+  }
+});
 
-  return myChart;
+return myChart;
 }
 
 // Initialize empty arrays
@@ -413,13 +395,13 @@ var TSLArsiData = [];
 
 // Function to add data
 function addData(chart, label, priceData, maData, emaData, rsiData, volumeData) {
-    chart.data.labels.push(label);
-    chart.data.datasets[0].data.push(priceData);
-    chart.data.datasets[1].data.push(maData);
-    chart.data.datasets[2].data.push(emaData);
-    chart.data.datasets[3].data.push(rsiData);
-    chart.data.datasets[4].data.push(volumeData);
-    chart.update();
+  chart.data.labels.push(label);
+  chart.data.datasets[0].data.push(priceData);
+  chart.data.datasets[1].data.push(maData);
+  chart.data.datasets[2].data.push(emaData);
+  chart.data.datasets[3].data.push(rsiData);
+  chart.data.datasets[4].data.push(volumeData);
+  chart.update();
 }
 
 // Usage:
@@ -434,10 +416,10 @@ var TSLA_chart = createChart('TSLA-chart', TSLAvolumeData, TSLAtimeData, TSLApri
 
 // go to end of chart
 function scrollToChartEnd() {
-  var elements = document.getElementsByClassName("chartWrapper");
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].scrollLeft = elements[i].scrollWidth;
-  }
+var elements = document.getElementsByClassName("chartWrapper");
+for (var i = 0; i < elements.length; i++) {
+  elements[i].scrollLeft = elements[i].scrollWidth;
+}
 }
 scrollToChartEnd()
 
@@ -447,75 +429,75 @@ scrollToChartEnd()
 
 // small chart
 function createSmallChart(chartId, priceData, timeData) {
-  var last10Prices = priceData.slice(-15);
-  var last10Labels = timeData.slice(-15);
+var last10Prices = priceData.slice(-15);
+var last10Labels = timeData.slice(-15);
 
-  const mysmallChart = new Chart(chartId, {
-      type: "line",
-      data: {
-          labels: last10Labels,
-          datasets: [{
-              label: 'price',
-              data: last10Prices,
-              borderColor: 'rgba(75,192,192,1)',
-              type: 'line',
-              categoryPercentage: 2,
-              lineTension: 0,
-              pointRadius: 3,
-              pointBorderWidth: 4,
-              fill: true,
-          }]
+const mysmallChart = new Chart(chartId, {
+    type: "line",
+    data: {
+        labels: last10Labels,
+        datasets: [{
+            label: 'price',
+            data: last10Prices,
+            borderColor: 'rgba(75,192,192,1)',
+            type: 'line',
+            categoryPercentage: 2,
+            lineTension: 0,
+            pointRadius: 3,
+            pointBorderWidth: 4,
+            fill: true,
+        }]
+    },
+    options: {
+      responsive: false,
+      scales: {
+        xAxes: [{
+          ticks: {
+            callback: function(value, index, values) {
+              return '';
+            }
+          }
+        }],
+        yAxes: [{
+          type: 'linear',
+          display: true,
+          position: 'right',
+          id: 'y-axis-1',
+        }],
       },
-      options: {
-        responsive: false,
-        scales: {
-          xAxes: [{
-            ticks: {
-              callback: function(value, index, values) {
-                return '';
-              }
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+            if (label) {
+              label += ': ';
             }
-          }],
-          yAxes: [{
-            type: 'linear',
-            display: true,
-            position: 'right',
-            id: 'y-axis-1',
-          }],
-        },
-        tooltips: {
-          mode: 'index',
-          intersect: false,
-          callbacks: {
-            label: function(tooltipItem, data) {
-              var label = data.datasets[tooltipItem.datasetIndex].label || '';
-              if (label) {
-                label += ': ';
-              }
-              label += tooltipItem.yLabel;
-              return label;
-            },
-          }
-        },
-        plugins: {
+            label += tooltipItem.yLabel;
+            return label;
+          },
+        }
+      },
+      plugins: {
+        zoom: {
+          pan: {
+            enabled: true,
+            mode: 'x'
+          },
           zoom: {
-            pan: {
-              enabled: true,
-              mode: 'x'
-            },
-            zoom: {
-              enabled: true,
-              mode: 'x'
-            }
+            enabled: true,
+            mode: 'x'
           }
-        },
-        legend: {
-          display: false // Hide the default legend
-        },
-      }
-    });
+        }
+      },
+      legend: {
+        display: false // Hide the default legend
+      },
+    }
+  });
 
-  return mysmallChart;
+return mysmallChart;
 }
 
 // Usage:
@@ -530,345 +512,345 @@ var TSLAsmallChart = createSmallChart('TSLAsmallChart', TSLApriceData, TSLAprice
 
 var ws = new WebSocket("ws://localhost:5678/")
 ws.onmessage = function (event) {
-    var jsonData = JSON.parse(event.data);
-    // set time
-    const today = new Date();
-    let h = today.getHours();
-    let m = today.getMinutes();
-    let s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    time =  h + ":" + m + ":" + s;
-    if (jsonData.hasOwnProperty('data_type')) {
-          // Create elements
-          var divItem = document.createElement('div');
-          var divHeader = document.createElement('div');
-          var pNameSymbol = document.createElement('p');
-          var pSignal = document.createElement('p');
-          var pClosePrice = document.createElement('p');
-          var pTime = document.createElement('p');
-          var iElement = document.createElement('i');
-          var divBody = document.createElement('div');
-          var divContents = document.createElement('div');
-          var divInner = document.createElement('div');
-          var pPriceOrder = document.createElement('p');
-          var pQuantity = document.createElement('p');
+  var jsonData = JSON.parse(event.data);
+  // set time
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  time =  h + ":" + m + ":" + s;
+  if (jsonData.hasOwnProperty('data_type')) {
+        // Create elements
+        var divItem = document.createElement('div');
+        var divHeader = document.createElement('div');
+        var pNameSymbol = document.createElement('p');
+        var pSignal = document.createElement('p');
+        var pClosePrice = document.createElement('p');
+        var pTime = document.createElement('p');
+        var iElement = document.createElement('i');
+        var divBody = document.createElement('div');
+        var divContents = document.createElement('div');
+        var divInner = document.createElement('div');
+        var pPriceOrder = document.createElement('p');
+        var pQuantity = document.createElement('p');
 
-          // Set classes
-          divItem.className = 'accordion-item';
-          divHeader.className = 'accordion-header';
-          divBody.className = 'accordion-body';
-          iElement.className = 'fa fa-chevron-down'
-          iElement.ariaHidden = "true"
-          divBody.style.display = "none"
+        // Set classes
+        divItem.className = 'accordion-item';
+        divHeader.className = 'accordion-header';
+        divBody.className = 'accordion-body';
+        iElement.className = 'fa fa-chevron-down'
+        iElement.ariaHidden = "true"
+        divBody.style.display = "none"
 
-          pTime.textContent = time;
-          has_stock_symbol = jsonData.hasOwnProperty('stock_symbol')
-          if (has_stock_symbol == true){
-            var stockSymbolNode = document.createTextNode(jsonData.stock_symbol);
-            pNameSymbol.appendChild(stockSymbolNode);
+        pTime.textContent = time;
+        has_stock_symbol = jsonData.hasOwnProperty('stock_symbol')
+        if (has_stock_symbol == true){
+          var stockSymbolNode = document.createTextNode(jsonData.stock_symbol);
+          pNameSymbol.appendChild(stockSymbolNode);
 
+        }
+        if(has_stock_symbol==false){
+          pNameSymbol.textContent = "General";
+        }
+
+        if(jsonData.final_signal=="Buy"){
+          if(has_stock_symbol){
+            showNotification(null, 'Buy',jsonData.stock_symbol)
           }
           if(has_stock_symbol==false){
-            pNameSymbol.textContent = "General";
+            showNotification(null, 'Buy',"GDP")
           }
-
-          if(jsonData.final_signal=="Buy"){
-            if(has_stock_symbol){
-              showNotification(null, 'Buy',jsonData.stock_symbol)
-            }
-            if(has_stock_symbol==false){
-              showNotification(null, 'Buy',"GDP")
-            }
-            pSignal.textContent = 'Buy';
-            divHeader.style.background = '#1fb74c';
-          }
-          if(jsonData.final_signal=="Sell"){
-            if(has_stock_symbol){
-              showNotification(null, 'Sell',jsonData.stock_symbol)
-            }
-            if(has_stock_symbol==false){
-              showNotification(null, 'Sell',"GDP")
-            }  
-            pSignal.textContent = 'Sell';
-            divHeader.style.background = '#e91e63';
-          }
-          if(jsonData.final_signal=="Neutral"){
-            pSignal.textContent = 'Neutral';
-          }
-
-          if(jsonData.data_type=="order_book"){
-            pClosePrice.textContent = 'Order Book';
-            var a = document.createTextNode(jsonData.price);
-            pPriceOrder.textContent = 'Price Order: ';
-            pPriceOrder.appendChild(a);
-            var b = document.createTextNode(jsonData.quantity);
-            pQuantity.textContent = 'Quantity: ';
-            pQuantity.appendChild(b);
-          }
-          if(jsonData.data_type=="news_sentiment"){
-            pClosePrice.textContent = 'News Sentiment';
-            var a = document.createTextNode(jsonData.sentiment_score);
-            pPriceOrder.textContent = 'Sentiment Score : ';
-            pPriceOrder.appendChild(a);
-            var b = document.createTextNode(jsonData.sentiment_magnitude);
-            pQuantity.textContent = 'Magnitude : ';
-            pQuantity.appendChild(b);
-          }
-          if(jsonData.data_type=="market_data"){
-            pClosePrice.textContent = 'Market Data';
-            var a = document.createTextNode(jsonData.market_cap);
-            var a1 = document.createTextNode(" B");;
-            pPriceOrder.textContent = `Market Cap : `;
-            pPriceOrder.appendChild(a);
-            pPriceOrder.appendChild(a1);
-            var b = document.createTextNode(jsonData.pe_ratio);
-            pQuantity.textContent = 'P/E Ratio : ';
-            pQuantity.appendChild(b);
-          }
-          if(jsonData.data_type=="economic_indicator"){
-            pClosePrice.textContent = 'Economic';
-            pPriceOrder.textContent = 'Indicator Name : GDP Growth Rate';
-            var b = document.createTextNode(jsonData.value);
-            pQuantity.textContent = 'Value : ';
-            pQuantity.appendChild(b);
-          }
-          divInner.appendChild(pPriceOrder);
-          divInner.appendChild(pQuantity);
-          divContents.appendChild(divInner);
-          divBody.appendChild(divContents);
-          divHeader.appendChild(pNameSymbol);
-          divHeader.appendChild(pSignal);
-          divHeader.appendChild(pClosePrice);
-          divHeader.appendChild(pTime);
-          divHeader.appendChild(iElement);
-          divItem.appendChild(divHeader);
-          divItem.appendChild(divBody);
-          
-          document.getElementById("news_page").prepend(divItem.cloneNode(true));
-
-          if (jsonData.hasOwnProperty('stock_symbol')){
-            var divItemCopy = divItem.cloneNode(true);
-            if(jsonData.stock_symbol == "AAPL"){
-              document.getElementById("AAPL-Signal").prepend(divItemCopy);
-              updateChart('AAPL', jsonData.final_signal);
-            }
-            divItemCopy = divItem.cloneNode(true);
-            if(jsonData.stock_symbol == "GOOGL"){
-              document.getElementById("GOOGL-Signal").prepend(divItemCopy);
-              updateChart('GOOGL', jsonData.final_signal);
-            }
-            divItemCopy = divItem.cloneNode(true);
-            if(jsonData.stock_symbol == "AMZN"){
-              document.getElementById("AMZN-Signal").prepend(divItemCopy);
-              updateChart('AMZN', jsonData.final_signal);
-            }
-            divItemCopy = divItem.cloneNode(true);
-            if(jsonData.stock_symbol == "MSFT"){
-              document.getElementById("MSFT-Signal").prepend(divItemCopy);
-              updateChart('MSFT', jsonData.final_signal);
-            }
-            divItemCopy = divItem.cloneNode(true);
-            if(jsonData.stock_symbol == "TSLA"){
-              document.getElementById("TSLA-Signal").prepend(divItemCopy);
-              updateChart('TSLA', jsonData.final_signal);
-            }
-          }
-          
-          if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
-            document.getElementById("Signals").appendChild(divItem.cloneNode(true));
-            updateBadge()
-            shakeBell()
-          }
-          
-    } 
-    else {
-      opening_price = document.createTextNode(jsonData.opening_price)
-      volume = document.createTextNode(jsonData.volume)
-      high = document.createTextNode(jsonData.high)
-      stock_symbol = document.createTextNode(jsonData.stock_symbol)
-      low = document.createTextNode(jsonData.low)
-      rsi = document.createTextNode(jsonData.rsi)
-      closing_price = document.createTextNode(jsonData.closing_price)
-      exponential_moving_average = document.createTextNode(jsonData.exponential_moving_average)
-      moving_average = document.createTextNode(jsonData.moving_average)
-      rsi_signal = document.createTextNode(jsonData.rsi_signal)
-      ma_signal = document.createTextNode(jsonData.ma_signal)
-      ema_signal = document.createTextNode(jsonData.ema_signal)
-      final_signal = document.createTextNode(jsonData.final_signal)
-
-// Create elements
-      var divItem = document.createElement('div');
-      var divHeader = document.createElement('div');
-      var pNameSymbol = document.createElement('p');
-      var pSignal = document.createElement('p');
-      var pClosePrice = document.createElement('p');
-      var pTime = document.createElement('p');
-      var iElement = document.createElement('i');
-      var divBody = document.createElement('div');
-      var divContents = document.createElement('div');
-      var divInner1 = document.createElement('div');
-      var divInner2 = document.createElement('div');
-      var divInner3 = document.createElement('div');
-      var divInner4 = document.createElement('div');
-      var divInner5 = document.createElement('div');
-      var pMA = document.createElement('p');
-      var pMASignal = document.createElement('p');
-      var pEMA = document.createElement('p');
-      var pEMASignal = document.createElement('p');
-      var pRSI = document.createElement('p');
-      var pRSISignal = document.createElement('p');
-      var pOpen = document.createElement('p');
-      var pVolume = document.createElement('p');
-      var pHight = document.createElement('p');
-      var pLow = document.createElement('p');
-
-      // Set classes
-      divItem.className = 'accordion-item';
-      divHeader.className = 'accordion-header';
-      divBody.className = 'accordion-body';
-
-      // Set styles
-      divBody.style.display = 'none';
-      iElement.className = 'fa fa-chevron-down';
-      iElement.ariaHidden = "true"
-
-      // Set text content
-      pTime.textContent = time;
-      pNameSymbol.appendChild(stock_symbol) ;
-      pSignal.appendChild(final_signal) ;
-      pClosePrice.appendChild(closing_price) ;
-
-
-
-      pMA.textContent = 'Moving Average : ';
-      pMA.appendChild(moving_average);
-      pMASignal.textContent = 'MA Signal : ';
-      pMASignal.appendChild(ma_signal);
-      pEMA.textContent = "Exponential Moving Average : ";
-      pEMA.appendChild(exponential_moving_average);
-      pEMASignal.textContent = "EMA Signal : ";
-      pEMASignal.appendChild(ema_signal);
-      pRSI.textContent = "RSI : ";
-      pRSI.appendChild(rsi);
-      pRSISignal.textContent = "RSI Signal : ";
-      pRSISignal.appendChild(rsi_signal);
-      pOpen.textContent ="Open Price : " ;
-      pOpen.appendChild(opening_price);
-      pVolume.textContent = "Volume : ";
-      pVolume.appendChild(volume);
-      pHight.textContent ="Hight Price : ";
-      pHight.appendChild(high);
-      pLow.textContent = "Low Price : ";
-      pLow.appendChild(low);
-
-      if(jsonData.final_signal=="Buy"){
-          showNotification(null, 'Buy',jsonData.stock_symbol)
+          pSignal.textContent = 'Buy';
           divHeader.style.background = '#1fb74c';
         }
-      if(jsonData.final_signal=="Sell"){
-          showNotification(null, 'Sell',jsonData.stock_symbol) 
+        if(jsonData.final_signal=="Sell"){
+          if(has_stock_symbol){
+            showNotification(null, 'Sell',jsonData.stock_symbol)
+          }
+          if(has_stock_symbol==false){
+            showNotification(null, 'Sell',"GDP")
+          }  
+          pSignal.textContent = 'Sell';
           divHeader.style.background = '#e91e63';
-      }
+        }
+        if(jsonData.final_signal=="Neutral"){
+          pSignal.textContent = 'Neutral';
+        }
 
-      // Append elements
-      divInner1.appendChild(pMA);
-      divInner1.appendChild(pMASignal);
-      divBody.appendChild(divInner1);
-      divInner2.appendChild(pEMA);
-      divInner2.appendChild(pEMASignal);
-      divBody.appendChild(divInner2);
-      divInner3.appendChild(pRSI);
-      divInner3.appendChild(pRSISignal);
-      divBody.appendChild(divInner3);
-      divInner4.appendChild(pOpen);
-      divInner4.appendChild(pVolume);
-      divBody.appendChild(divInner4);
-      divInner5.appendChild(pHight);
-      divInner5.appendChild(pLow);
-      divBody.appendChild(divInner5);
-      divHeader.appendChild(pNameSymbol);
-      divHeader.appendChild(pSignal);
-      divHeader.appendChild(pClosePrice);
-      divHeader.appendChild(pTime);
-      divHeader.appendChild(iElement);
-      divItem.appendChild(divHeader);
-      divItem.appendChild(divBody);
+        if(jsonData.data_type=="order_book"){
+          pClosePrice.textContent = 'Order Book';
+          var a = document.createTextNode(jsonData.price);
+          pPriceOrder.textContent = 'Price Order: ';
+          pPriceOrder.appendChild(a);
+          var b = document.createTextNode(jsonData.quantity);
+          pQuantity.textContent = 'Quantity: ';
+          pQuantity.appendChild(b);
+        }
+        if(jsonData.data_type=="news_sentiment"){
+          pClosePrice.textContent = 'News Sentiment';
+          var a = document.createTextNode(jsonData.sentiment_score);
+          pPriceOrder.textContent = 'Sentiment Score : ';
+          pPriceOrder.appendChild(a);
+          var b = document.createTextNode(jsonData.sentiment_magnitude);
+          pQuantity.textContent = 'Magnitude : ';
+          pQuantity.appendChild(b);
+        }
+        if(jsonData.data_type=="market_data"){
+          pClosePrice.textContent = 'Market Data';
+          var a = document.createTextNode(jsonData.market_cap);
+          var a1 = document.createTextNode(" B");;
+          pPriceOrder.textContent = `Market Cap : `;
+          pPriceOrder.appendChild(a);
+          pPriceOrder.appendChild(a1);
+          var b = document.createTextNode(jsonData.pe_ratio);
+          pQuantity.textContent = 'P/E Ratio : ';
+          pQuantity.appendChild(b);
+        }
+        if(jsonData.data_type=="economic_indicator"){
+          pClosePrice.textContent = 'Economic';
+          pPriceOrder.textContent = 'Indicator Name : GDP Growth Rate';
+          var b = document.createTextNode(jsonData.value);
+          pQuantity.textContent = 'Value : ';
+          pQuantity.appendChild(b);
+        }
+        divInner.appendChild(pPriceOrder);
+        divInner.appendChild(pQuantity);
+        divContents.appendChild(divInner);
+        divBody.appendChild(divContents);
+        divHeader.appendChild(pNameSymbol);
+        divHeader.appendChild(pSignal);
+        divHeader.appendChild(pClosePrice);
+        divHeader.appendChild(pTime);
+        divHeader.appendChild(iElement);
+        divItem.appendChild(divHeader);
+        divItem.appendChild(divBody);
+        
+        document.getElementById("news_page").prepend(divItem.cloneNode(true));
 
-      var divItemCopy = divItem.cloneNode(true);
-      if(jsonData.stock_symbol == "AAPL"){
-        document.getElementById("AAPL-Signal").prepend(divItemCopy);
-        addData(AAPL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
-        createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
-        updateChart('AAPL', jsonData.final_signal);
-        updateTable('AAPL', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
+        if (jsonData.hasOwnProperty('stock_symbol')){
+          var divItemCopy = divItem.cloneNode(true);
+          if(jsonData.stock_symbol == "AAPL"){
+            document.getElementById("AAPL-Signal").prepend(divItemCopy);
+            updateChart('AAPL', jsonData.final_signal);
+          }
+          divItemCopy = divItem.cloneNode(true);
+          if(jsonData.stock_symbol == "GOOGL"){
+            document.getElementById("GOOGL-Signal").prepend(divItemCopy);
+            updateChart('GOOGL', jsonData.final_signal);
+          }
+          divItemCopy = divItem.cloneNode(true);
+          if(jsonData.stock_symbol == "AMZN"){
+            document.getElementById("AMZN-Signal").prepend(divItemCopy);
+            updateChart('AMZN', jsonData.final_signal);
+          }
+          divItemCopy = divItem.cloneNode(true);
+          if(jsonData.stock_symbol == "MSFT"){
+            document.getElementById("MSFT-Signal").prepend(divItemCopy);
+            updateChart('MSFT', jsonData.final_signal);
+          }
+          divItemCopy = divItem.cloneNode(true);
+          if(jsonData.stock_symbol == "TSLA"){
+            document.getElementById("TSLA-Signal").prepend(divItemCopy);
+            updateChart('TSLA', jsonData.final_signal);
+          }
+        }
+        
+        if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
+          document.getElementById("Signals").appendChild(divItem.cloneNode(true));
+          updateBadge()
+          shakeBell()
+        }
+        
+  } 
+  else {
+    opening_price = document.createTextNode(jsonData.opening_price)
+    volume = document.createTextNode(jsonData.volume)
+    high = document.createTextNode(jsonData.high)
+    stock_symbol = document.createTextNode(jsonData.stock_symbol)
+    low = document.createTextNode(jsonData.low)
+    rsi = document.createTextNode(jsonData.rsi)
+    closing_price = document.createTextNode(jsonData.closing_price)
+    exponential_moving_average = document.createTextNode(jsonData.exponential_moving_average)
+    moving_average = document.createTextNode(jsonData.moving_average)
+    rsi_signal = document.createTextNode(jsonData.rsi_signal)
+    ma_signal = document.createTextNode(jsonData.ma_signal)
+    ema_signal = document.createTextNode(jsonData.ema_signal)
+    final_signal = document.createTextNode(jsonData.final_signal)
+
+// Create elements
+    var divItem = document.createElement('div');
+    var divHeader = document.createElement('div');
+    var pNameSymbol = document.createElement('p');
+    var pSignal = document.createElement('p');
+    var pClosePrice = document.createElement('p');
+    var pTime = document.createElement('p');
+    var iElement = document.createElement('i');
+    var divBody = document.createElement('div');
+    var divContents = document.createElement('div');
+    var divInner1 = document.createElement('div');
+    var divInner2 = document.createElement('div');
+    var divInner3 = document.createElement('div');
+    var divInner4 = document.createElement('div');
+    var divInner5 = document.createElement('div');
+    var pMA = document.createElement('p');
+    var pMASignal = document.createElement('p');
+    var pEMA = document.createElement('p');
+    var pEMASignal = document.createElement('p');
+    var pRSI = document.createElement('p');
+    var pRSISignal = document.createElement('p');
+    var pOpen = document.createElement('p');
+    var pVolume = document.createElement('p');
+    var pHight = document.createElement('p');
+    var pLow = document.createElement('p');
+
+    // Set classes
+    divItem.className = 'accordion-item';
+    divHeader.className = 'accordion-header';
+    divBody.className = 'accordion-body';
+
+    // Set styles
+    divBody.style.display = 'none';
+    iElement.className = 'fa fa-chevron-down';
+    iElement.ariaHidden = "true"
+
+    // Set text content
+    pTime.textContent = time;
+    pNameSymbol.appendChild(stock_symbol) ;
+    pSignal.appendChild(final_signal) ;
+    pClosePrice.appendChild(closing_price) ;
+
+
+
+    pMA.textContent = 'Moving Average : ';
+    pMA.appendChild(moving_average);
+    pMASignal.textContent = 'MA Signal : ';
+    pMASignal.appendChild(ma_signal);
+    pEMA.textContent = "Exponential Moving Average : ";
+    pEMA.appendChild(exponential_moving_average);
+    pEMASignal.textContent = "EMA Signal : ";
+    pEMASignal.appendChild(ema_signal);
+    pRSI.textContent = "RSI : ";
+    pRSI.appendChild(rsi);
+    pRSISignal.textContent = "RSI Signal : ";
+    pRSISignal.appendChild(rsi_signal);
+    pOpen.textContent ="Open Price : " ;
+    pOpen.appendChild(opening_price);
+    pVolume.textContent = "Volume : ";
+    pVolume.appendChild(volume);
+    pHight.textContent ="Hight Price : ";
+    pHight.appendChild(high);
+    pLow.textContent = "Low Price : ";
+    pLow.appendChild(low);
+
+    if(jsonData.final_signal=="Buy"){
+        showNotification(null, 'Buy',jsonData.stock_symbol)
+        divHeader.style.background = '#1fb74c';
       }
-      divItemCopy = divItem.cloneNode(true);
-      if(jsonData.stock_symbol == "GOOGL"){
-        document.getElementById("GOOGL-Signal").prepend(divItemCopy);
-        addData(GOOGL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
-        createSmallChart('GOOGLsmallChart', GOOGLpriceData, GOOGLtimeData);
-        updateChart('GOOGL', jsonData.final_signal);
-        updateTable('GOOGL', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
-      }
-      divItemCopy = divItem.cloneNode(true);
-      if(jsonData.stock_symbol == "AMZN"){
-        document.getElementById("AMZN-Signal").prepend(divItemCopy);
-        addData(AMZN_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
-        createSmallChart('AMZNsmallChart', AMZNpriceData, AMZNtimeData);
-        updateChart('AMZN', jsonData.final_signal);
-        updateTable('AMZN', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
-      }
-      divItemCopy = divItem.cloneNode(true);
-      if(jsonData.stock_symbol == "MSFT"){
-        document.getElementById("MSFT-Signal").prepend(divItemCopy);
-        addData(MSFT_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
-        createSmallChart('MSFTsmallChart', MSFTpriceData, MSFTtimeData);
-        updateChart('MSFT', jsonData.final_signal);
-        updateTable('MSFT', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
-      }
-      divItemCopy = divItem.cloneNode(true);
-      if(jsonData.stock_symbol == "TSLA"){
-        document.getElementById("TSLA-Signal").prepend(divItemCopy);
-        addData(TSLA_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
-        createSmallChart('TSLAsmallChart', TSLApriceData, TSLApriceData);
-        updateChart('TSLA', jsonData.final_signal);
-        updateTable('TSLA', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
-      }
-    
-      if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
-        document.getElementById("Signals").appendChild(divItem.cloneNode(true));
-        updateBadge()
-        shakeBell()
-      }
-      scrollToChartEnd();
-     }
+    if(jsonData.final_signal=="Sell"){
+        showNotification(null, 'Sell',jsonData.stock_symbol) 
+        divHeader.style.background = '#e91e63';
+    }
+
+    // Append elements
+    divInner1.appendChild(pMA);
+    divInner1.appendChild(pMASignal);
+    divBody.appendChild(divInner1);
+    divInner2.appendChild(pEMA);
+    divInner2.appendChild(pEMASignal);
+    divBody.appendChild(divInner2);
+    divInner3.appendChild(pRSI);
+    divInner3.appendChild(pRSISignal);
+    divBody.appendChild(divInner3);
+    divInner4.appendChild(pOpen);
+    divInner4.appendChild(pVolume);
+    divBody.appendChild(divInner4);
+    divInner5.appendChild(pHight);
+    divInner5.appendChild(pLow);
+    divBody.appendChild(divInner5);
+    divHeader.appendChild(pNameSymbol);
+    divHeader.appendChild(pSignal);
+    divHeader.appendChild(pClosePrice);
+    divHeader.appendChild(pTime);
+    divHeader.appendChild(iElement);
+    divItem.appendChild(divHeader);
+    divItem.appendChild(divBody);
+
+    var divItemCopy = divItem.cloneNode(true);
+    if(jsonData.stock_symbol == "AAPL"){
+      document.getElementById("AAPL-Signal").prepend(divItemCopy);
+      addData(AAPL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+      createSmallChart('AAPLsmallChart', AAPLpriceData, AAPLtimeData);
+      updateChart('AAPL', jsonData.final_signal);
+      updateTable('AAPL', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
+    }
+    divItemCopy = divItem.cloneNode(true);
+    if(jsonData.stock_symbol == "GOOGL"){
+      document.getElementById("GOOGL-Signal").prepend(divItemCopy);
+      addData(GOOGL_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+      createSmallChart('GOOGLsmallChart', GOOGLpriceData, GOOGLtimeData);
+      updateChart('GOOGL', jsonData.final_signal);
+      updateTable('GOOGL', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
+    }
+    divItemCopy = divItem.cloneNode(true);
+    if(jsonData.stock_symbol == "AMZN"){
+      document.getElementById("AMZN-Signal").prepend(divItemCopy);
+      addData(AMZN_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+      createSmallChart('AMZNsmallChart', AMZNpriceData, AMZNtimeData);
+      updateChart('AMZN', jsonData.final_signal);
+      updateTable('AMZN', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
+    }
+    divItemCopy = divItem.cloneNode(true);
+    if(jsonData.stock_symbol == "MSFT"){
+      document.getElementById("MSFT-Signal").prepend(divItemCopy);
+      addData(MSFT_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+      createSmallChart('MSFTsmallChart', MSFTpriceData, MSFTtimeData);
+      updateChart('MSFT', jsonData.final_signal);
+      updateTable('MSFT', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
+    }
+    divItemCopy = divItem.cloneNode(true);
+    if(jsonData.stock_symbol == "TSLA"){
+      document.getElementById("TSLA-Signal").prepend(divItemCopy);
+      addData(TSLA_chart, time, jsonData.closing_price,jsonData.moving_average,jsonData.exponential_moving_average,jsonData.rsi, jsonData.volume);
+      createSmallChart('TSLAsmallChart', TSLApriceData, TSLApriceData);
+      updateChart('TSLA', jsonData.final_signal);
+      updateTable('TSLA', jsonData.final_signal, jsonData.closing_price, jsonData.volume,time);
+    }
+  
+    if(jsonData.final_signal=="Buy" || jsonData.final_signal=="Sell"){
+      document.getElementById("Signals").appendChild(divItem.cloneNode(true));
+      updateBadge()
+      shakeBell()
+    }
+    scrollToChartEnd();
+   }
 };
 
 
 // trade box
 function showBox(sel) {
-  var boxes = document.getElementById("trade").querySelectorAll('.symbol-trade');
-  boxes.forEach(function(box) {
-    box.style.display = 'none';
-  });
-  
-  var selectedBox = document.getElementById(sel.value);
-  if (selectedBox) {
-    selectedBox.style.display = 'flex';
-  }
+var boxes = document.getElementById("trade").querySelectorAll('.symbol-trade');
+boxes.forEach(function(box) {
+  box.style.display = 'none';
+});
+
+var selectedBox = document.getElementById(sel.value);
+if (selectedBox) {
+  selectedBox.style.display = 'flex';
+}
 }
 
 function changeBackground(radio, color) {
-  var boxes = document.querySelectorAll('div');
-  boxes.forEach(function(box) {
-    box.style.backgroundColor = '';
-  });
-  
-  if (radio.checked) {
-    var box = document.getElementById('box' + radio.id.charAt(radio.id.length-1));
-    box.style.backgroundColor = color;
-  }
+var boxes = document.querySelectorAll('div');
+boxes.forEach(function(box) {
+  box.style.backgroundColor = '';
+});
+
+if (radio.checked) {
+  var box = document.getElementById('box' + radio.id.charAt(radio.id.length-1));
+  box.style.backgroundColor = color;
+}
 }
 
 
@@ -878,60 +860,60 @@ function changeBackground(radio, color) {
 let charts = {};
 
 function initCharts(symbols) {
-    symbols.forEach(symbol => {
-        let ctx = document.getElementById(symbol).getContext('2d');
-        charts[symbol] = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Buy', 'Sell', 'Neutral'],
-                datasets: [{
-                    data: [0, 0, 0],
-                    backgroundColor: ['Green', 'Red', 'Grey'],
-                    hoverBackgroundColor: ['LightGreen', 'LightCoral', 'LightGrey'],
-                    hoverBorderColor: 'rgba(234, 236, 244, 1)',
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,  // Add this line
-                title: {
-                    display: true,
-                    text: `Final Signals for ${symbol}`,
-                    fontSize: 14
-                },
-                legend: {
-                    labels: {
-                        fontSize: 14
-                    }
-                },
-                tooltips: {
-                    titleFontSize: 14,
-                    bodyFontSize: 14,
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                },
-            }
-        });
-    });
+  symbols.forEach(symbol => {
+      let ctx = document.getElementById(symbol).getContext('2d');
+      charts[symbol] = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels: ['Buy', 'Sell', 'Neutral'],
+              datasets: [{
+                  data: [0, 0, 0],
+                  backgroundColor: ['Green', 'Red', 'Grey'],
+                  hoverBackgroundColor: ['LightGreen', 'LightCoral', 'LightGrey'],
+                  hoverBorderColor: 'rgba(234, 236, 244, 1)',
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: false,  // Add this line
+              title: {
+                  display: true,
+                  text: `Final Signals for ${symbol}`,
+                  fontSize: 14
+              },
+              legend: {
+                  labels: {
+                      fontSize: 14
+                  }
+              },
+              tooltips: {
+                  titleFontSize: 14,
+                  bodyFontSize: 14,
+                  backgroundColor: "rgb(255,255,255)",
+                  bodyFontColor: "#858796",
+                  borderColor: '#dddfeb',
+                  borderWidth: 1,
+                  xPadding: 15,
+                  yPadding: 15,
+                  displayColors: false,
+                  caretPadding: 10,
+              },
+          }
+      });
+  });
 }
 
 
 function updateChart(stock_symbol, final_signal) {
-    let chart = charts[stock_symbol];
-    if (final_signal === 'Buy') {
-        chart.data.datasets[0].data[0]++;
-    } else if (final_signal === 'Sell') {
-        chart.data.datasets[0].data[1]++;
-    } else if (final_signal === 'Neutral') {
-        chart.data.datasets[0].data[2]++;
-    }
-    chart.update();
+  let chart = charts[stock_symbol];
+  if (final_signal === 'Buy') {
+      chart.data.datasets[0].data[0]++;
+  } else if (final_signal === 'Sell') {
+      chart.data.datasets[0].data[1]++;
+  } else if (final_signal === 'Neutral') {
+      chart.data.datasets[0].data[2]++;
+  }
+  chart.update();
 }
 
 // Initialize the charts
@@ -943,22 +925,21 @@ initCharts(['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']);
 let lastPrices = {};
 
 function updateTable(stock_symbol, final_signal, final_price, volume,time) {
-  // Calculate the percentage change
-  let percentage_change = 0;
-  if (lastPrices[stock_symbol]) {
-      percentage_change = ((final_price - lastPrices[stock_symbol]) / lastPrices[stock_symbol]) * 100;
-  }
-  lastPrices[stock_symbol] = final_price;
-
-  // Update the table
-  let table = document.getElementById(stock_symbol + '-table').getElementsByTagName('tbody')[0];
-  let newRow = table.insertRow(0);
-  newRow.innerHTML = `
-      <td>${final_price}</td>
-      <td>${final_signal}</td>
-      <td>${volume}</td>
-      <td style="color: ${percentage_change >= 0 ? 'green' : 'red'}">${percentage_change.toFixed(2)}%</td>
-      <td>${time}</td>
-  `;
+// Calculate the percentage change
+let percentage_change = 0;
+if (lastPrices[stock_symbol]) {
+    percentage_change = ((final_price - lastPrices[stock_symbol]) / lastPrices[stock_symbol]) * 100;
 }
+lastPrices[stock_symbol] = final_price;
 
+// Update the table
+let table = document.getElementById(stock_symbol + '-table').getElementsByTagName('tbody')[0];
+let newRow = table.insertRow(0);
+newRow.innerHTML = `
+    <td>${final_price}</td>
+    <td>${final_signal}</td>
+    <td>${volume}</td>
+    <td style="color: ${percentage_change >= 0 ? 'green' : 'red'}">${percentage_change.toFixed(2)}%</td>
+    <td>${time}</td>
+`;
+}

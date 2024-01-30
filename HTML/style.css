@@ -564,7 +564,7 @@ margin-top: 20px;
 .notification {
     display: block;
     position: fixed;
-    padding: 25px;
+    padding: 20px;
     overflow: hidden;
     width: 300px;
     border-radius: 4px;
@@ -572,7 +572,7 @@ margin-top: 20px;
     color: #fff;
     -webkit-animation: show-notification 3s ease-out;
     animation: show-notification 3s ease-out;
-    top: 810px;
+    top: 710px;
     right: 35px;
     text-align: center;
     z-index: 500;
