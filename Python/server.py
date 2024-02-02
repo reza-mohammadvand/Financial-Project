@@ -83,14 +83,10 @@ def forward_data_to_kafka(data):
         kafka_producer.produce('validated_data', key=None, value=str(data))
         kafka_producer.flush()  # Ensure that all messages are sent
 
-        print(f"Data forwarded to Kafka: {data}")
+        print(f"Receive data and forwarded it by Kafka on port 9092")
 
     except Exception as e:
         print(f"Error forwarding data to Kafka: {e}")
-        print(f"Exception type: {type(e)}")
-        print(f"Exception args: {e.args}")
-        print(f"Exception message: {str(e)}")
-
 
 if __name__ == '__main__':
     app.run(port=5000)

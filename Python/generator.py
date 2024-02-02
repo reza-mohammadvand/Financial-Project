@@ -46,7 +46,7 @@ def generate_data():
         "volume": volume,
         "timestamp": time.time()
     }
-    print(f"Sending data: {data}", flush=True)  # Add flush=True
+    print(f"Sending data on port 5000", flush=True)  # Add flush=True
     return data
 
 
@@ -89,7 +89,7 @@ def generate_additional_data():
             "indicator_name": "GDP Growth Rate",
             "value": random.uniform(-5, 5)
         }
-    print(f"Sending additional data: {data}", flush=True)  # Add flush=True
+    print(f"Sending additional data on port 5000", flush=True)  # Add flush=True
 
     return data
 

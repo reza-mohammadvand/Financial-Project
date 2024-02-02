@@ -50,7 +50,7 @@ def generate_signal(data):
         buy_signals = signals.count('Buy')
         sell_signals = signals.count('Sell')
 
-        # Only print a signal if two or more indicators agree
+        # Only print a signal if three indicators agree
         if buy_signals == 3:
             signal = 'Buy'
         elif sell_signals == 3:
@@ -172,11 +172,12 @@ async def time(websocket, path):
 
         signal = generate_signal(data)
 
-        print(signal)
+        print("Recive data and send it on port 5678")
 
         if data["final_signal"] in ["Buy", "Sell"]:
             producer.produce('alarm_topic', signal)
             producer.flush()
+            print("ُSend a notification")
 
         await websocket.send(json.dumps(data))
         await asyncio.sleep(1)

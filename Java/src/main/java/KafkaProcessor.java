@@ -39,7 +39,6 @@ public class KafkaProcessor {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
-                System.out.println("Received data: " + record.value());
 
                 // Parse the data
                 Map<String, Object> data = parseData(record.value());
@@ -128,7 +127,7 @@ public class KafkaProcessor {
                 if(e != null) {
                     e.printStackTrace();
                 } else {
-                    System.out.println("Forwarded data to Python: " + jsonData);
+                    System.out.println("Recive data and Forward it to Python file by kafka");
                 }
             }
         });

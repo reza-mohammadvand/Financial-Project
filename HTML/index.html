@@ -12,6 +12,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script type="text/javascript" src="chart.js"></script>
+  <script type="text/javascript" src="addData.js"></script>
+
 </head>
 <body>
   <div class="main">    
@@ -62,7 +65,7 @@
         </div> 
         <div class="accordion js-accordion"> 
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 65px">Signal</p><p style="margin-left: 70px">Price / Type</p><p style="margin-left: 60px;">Time</p></div>
           </div>
           <div id="Signals">
           </div>
@@ -72,7 +75,7 @@
         <div class="tab-title">Signaling system</div>
         <div class="accordion js-accordion" >
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 90px">Signal</p><p style="margin-left:130px">Type</p><p style="margin-left: 125px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 80px">Signal</p><p style="margin-left:90px">Type</p><p style="margin-left: 115px;">Time</p></div>
           </div>
           <div id="news_page">
           </div>
@@ -236,7 +239,7 @@
             <canvas id="AAPL-chart"></canvas>
           </div>                                       
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 58px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 55px;">Time</p></div>
           </div>
           <div id="AAPL-Signal">
           </div>
@@ -252,7 +255,7 @@
             <canvas id="GOOGL-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 58px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 55px;">Time</p></div>
           </div>
           <div id="GOOGL-Signal">
           </div>
@@ -268,7 +271,7 @@
             <canvas id="AMZN-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 58px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 55px;">Time</p></div>
           </div>
           <div id="AMZN-Signal">
           </div>
@@ -284,7 +287,7 @@
             <canvas id="MSFT-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 58px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 55px;">Time</p></div>
           </div>
           <div id="MSFT-Signal">
           </div>
@@ -300,7 +303,7 @@
             <canvas id="TSLA-chart"></canvas>
           </div>
           <div class="titles">
-            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 85px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 100px;">Time</p></div>
+            <div><p style="margin-left: 35px">Symbol</p><p style="margin-left: 58px">Signal</p><p style="margin-left: 85px">Price / Type</p><p style="margin-left: 55px;">Time</p></div>
           </div>
           <div id="TSLA-Signal">
           </div>
@@ -308,12 +311,15 @@
       </div>
     </div>
   </div>
-  
+
 <script type="text/javascript" src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script type="text/javascript" src="chart.js"></script>
+<script type="text/javascript" src="addData.js"></script>
+
 </body>
 </html>
 

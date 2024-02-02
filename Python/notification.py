@@ -63,7 +63,7 @@ while True:
 
     # Parse the data
     data = msg.value().decode('utf-8')
-    print(data)
+    print("Send notification email to user")
     
 
     #send data
