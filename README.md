@@ -7,7 +7,7 @@
 4. [Technologies Used](#technologies-used)
 5. [Challenges Faced](#challenges-faced)
 6. [Description of the Codes](#description-of-the-codes)
-7. [Implementation](#implementation)
+7. [Implementation](#Project-Implementation)
 
 ## Introduction <a name="introduction"></a>
 Welcome to our real-time financial data analysis project. In the fast-paced world of financial markets, quick and informed decision-making is crucial. This project is designed to provide real-time insights by analyzing simulated financial data and generating actionable trading signals. It uses distributed computing principles, microservices architecture, and stream processing to deliver these insights.
@@ -41,7 +41,7 @@ In this project, I used a variety of technologies to achieve my goals:
 
 5. **JavaScript**: I used JavaScript for updating the dashboard in real-time. It listens to the WebSocket and updates the dashboard whenever new data arrives.
 
-## Challenges Faced <a name="Challenges"></a>
+## Challenges Faced <a name="challenges-faced"></a>
 
 During the development of this project, I faced several challenges:
 
@@ -58,7 +58,7 @@ During the development of this project, I faced several challenges:
 6. **Data Visualization**: Visualizing the processed data and signals in a user-friendly dashboard was also a challenge. The dashboard should be updated in real-time and should be easy to understand.
 
 
-## Description of the codes <a name="Description"></a>
+## Description of the codes <a name="description-of-the-codes"></a>
 The `generator.py` file generates data about different stocks and news about different stocks. This data is sent to port 5000. Another file named `server` receives this data from port 5000 and after validating it, sends it through the Kafka server on port 9092 with the subject `validated_data`. A Java file takes this data and calculates 3 indicators for each share, which are `rsi`, `ema`, and `ma`. These indicators are calculated for each data received from each stock and added to that data. It then sends this data through Kafka with the `Processed_data` topic.
 
 A Python file named `signal_service` takes this data and issues a buy, sell, or neutral signal according to the added indicators. It also generates signals for stock news data according to the type and importance of purchases. After generating the signal, it adds it to the data and sends it via WebSocket on port 5678. If it is a buy or sell signal, it is sent via Kafka with `alarm_topic`. This data is received in the Python `notification` file and the program sends a signal alert email to a specified email address. 
@@ -154,7 +154,7 @@ In this file, we listen to port 5678 and every time data arrives, we send it to 
 
 In this file, we create two types of charts using the Chart.js library. One chart is drawn for each share, and each chart has 5 price charts, moving average, exponential moving average, RSI, and volume for that share. Also, a function is created for when new data is received, which is used to update the chart. Additionally, a small chart is considered for each share, which is displayed on the main page and only shows the last 15 prices.
 
-## Project Implementation <a name="Implementation"></a>
+## Project Implementation <a name="Project-Implementation"></a>
 
 To implement this project, follow these steps:
 
