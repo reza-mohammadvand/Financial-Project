@@ -6,8 +6,8 @@
 3. [Project Overview](#project-overview)
 4. [Technologies Used](#Technologies)
 5. [Challenges Faced](#Challenges)
-6. [Implementation](#implementation)
-7. [Getting Started](#getting-started)
+6. [Description of the codes](#Description)
+7. [Implementation](#implementation)
 
 
 ## Introduction <a name="introduction"></a>
@@ -59,7 +59,7 @@ During the development of this project, I faced several challenges:
 6. **Data Visualization**: Visualizing the processed data and signals in a user-friendly dashboard was also a challenge. The dashboard should be updated in real-time and should be easy to understand.
 
 
-## Implementation <a name="Implementation"></a>
+## Description of the codes <a name="Description"></a>
 The `generator.py` file generates data about different stocks and news about different stocks. This data is sent to port 5000. Another file named `server` receives this data from port 5000 and after validating it, sends it through the Kafka server on port 9092 with the subject `validated_data`. A Java file takes this data and calculates 3 indicators for each share, which are `rsi`, `ema`, and `ma`. These indicators are calculated for each data received from each stock and added to that data. It then sends this data through Kafka with the `Processed_data` topic.
 
 A Python file named `signal_service` takes this data and issues a buy, sell, or neutral signal according to the added indicators. It also generates signals for stock news data according to the type and importance of purchases. After generating the signal, it adds it to the data and sends it via WebSocket on port 5678. If it is a buy or sell signal, it is sent via Kafka with `alarm_topic`. This data is received in the Python `notification` file and the program sends a signal alert email to a specified email address. 
@@ -155,10 +155,27 @@ In this file, we listen to port 5678 and every time data arrives, we send it to 
 
 In this file, we create two types of charts using the Chart.js library. One chart is drawn for each share, and each chart has 5 price charts, moving average, exponential moving average, RSI, and volume for that share. Also, a function is created for when new data is received, which is used to update the chart. Additionally, a small chart is considered for each share, which is displayed on the main page and only shows the last 15 prices.
 
+## Project Implementation <a name="Implementation"></a>
 
+To implement this project, follow these steps:
 
+1. **Install and run the Kafka server**: Navigate to the Kafka directory, open CMD there and run the Kafka server with these commands:
+    ```
+    bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+    bin\windows\kafka-server-start.bat .\config\server.properties
+    ```
 
+2. **Run generator.py**: This file generates data for us.
 
+3. **Start server.py**: This validates our data and sends it to the Kafka server.
 
-## Getting Started <a name="getting-started"></a>
-Instructions for setting up your project locally. Steps for installation, software requirements, and how to run the system.
+4. **Run KafkaProcessor.java**: This file gets the data from Kafka, processes it, and then sends it back to the Kafka server.
+
+5. **Run signal_service.py**: This file gets the data from Kafka again and sends it to websocket (port 5678) and Kafka (port 9092) after generating the signal.
+
+6. **Run notification.py**: This file receives the alerts and sends them to the user via email.
+
+7. **Open index.html**: Finally, you can open the index.html file and see the output.
+
+Please note that you need to have Kafka installed and running on your machine to implement this project.
+
