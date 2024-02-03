@@ -111,8 +111,49 @@ The `MovingAverage` class in Java calculates the moving average of a series of n
 
 The `RSI` class in Java calculates the Relative Strength Index (RSI) of a series of closing prices. The RSI is a momentum oscillator used in technical analysis that measures the speed and change of price movements.
 
+### Signal Service (signal_service.py)
 
+The `signal_service` script sets up a Kafka producer and defines a function `generate_signal` that generates trading signals based on the Relative Strength Index (RSI), moving average, exponential moving average, and news sentiment.
 
+The `generate_signal` function checks the data type of the input data. If the data type is `None`, it treats the data as stock price data and generates trading signals based on the RSI, moving average, and exponential moving average. If the data type is `news_sentiment`, it treats the data as news sentiment data and generates a trading signal based on the sentiment score.
+
+This Python script sets up a Kafka consumer that subscribes to a topic and continuously polls for new messages. When a new message is received, it is parsed as JSON and passed to the `generate_signal` function to generate a trading signal. If the final signal is either "Buy" or "Sell", a message is produced to the 'alarm_topic' topic. The data is then sent to the client connected via WebSocket. The script also starts a WebSocket server that runs until it is stopped.
+
+This script provides a simple and efficient way to generate trading signals from stock price data and news sentiment data, which can be useful in algorithmic trading.
+
+### Email Notifications (notification.py)
+
+This Python script sets up a Kafka consumer that subscribes to a topic and continuously polls for new messages. When a new message is received, it is parsed as JSON and an email is sent with the data as the body. The script also defines a function `send_email` that sends an email with a given subject and body.
+This script provides a simple and efficient way to consume data from a Kafka topic and send email notifications based on the data.
+
+### Display on UI (Java Scripts Files)
+
+This script is designed to continuously receive data through a web socket on port 5678 and display them on the graphs and tables defined on the web page. The JavaScript codes are placed in separate files for better readability.
+
+#### script.js
+
+This file contains many main functions:
+
+- **Main Tabs**: Launches jQuery UI tabs to display content vertically on the page.
+- **startTime()**: Displays a digital clock with hours, minutes, and seconds.
+- **Notification Bell**: Contains several functions related to notifications:
+  - `shakeBell()`: Animates the notification bell icon.
+  - `updateBadge()`: Updates the notification badge number.
+  - `resetNumber()`: Resets the notification badge number.
+  - `showNotification()`: Displays a notification message with type, signal, and symbol.
+  - `hideNotification()`: Hides the notification message.
+- **Search Box**: Implements a search input to filter items in a list. Listens for input events and filters the list based on the input value.
+- **Trade Box**: Displays different trade options based on the selected amount. This section creates a new page for each stock and displays information such as purchase and sale information, pie chart, and change table for that stock, where the stock can be bought and sold.
+- **Circle Chart**: Launches circle charts to display the final signals of various stocks, which are displayed in the buy and sell section.
+- **Table**: Updates the table with the latest stock information including closing price, signal, volume, percent change, and time.
+
+#### addData.js
+
+In this file, we listen to port 5678 and every time data arrives, we send it to different parts of the web page to be displayed.
+
+#### chart.js
+
+In this file, we create two types of charts using the Chart.js library. One chart is drawn for each share, and each chart has 5 price charts, moving average, exponential moving average, RSI, and volume for that share. Also, a function is created for when new data is received, which is used to update the chart. Additionally, a small chart is considered for each share, which is displayed on the main page and only shows the last 15 prices.
 
 
 
