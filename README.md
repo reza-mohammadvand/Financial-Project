@@ -27,7 +27,7 @@ The project involves the development of an architecture based on microservices a
 7. **Aggregator Service**: Summarizes the performance of each stock.
 8. **User Interface**: Allows users to interact with the system, view visualized data, and receive notifications.
 
-## Technologies Used <a name="Technologies"></a>
+## Technologies Used <a name="technologies-used"></a>
 
 In this project, I used a variety of technologies to achieve my goals:
 
