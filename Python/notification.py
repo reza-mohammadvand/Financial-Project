@@ -1,10 +1,8 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
 from confluent_kafka import Consumer
 import json
-
 
 def send_email(subject, body):
     # Email configuration
@@ -24,7 +22,7 @@ def send_email(subject, body):
 
     # Create an SMTP connection
     server = smtplib.SMTP(email_config['smtp_host'], email_config['smtp_port'])
-    server.starttls()  # Start TLS encryption
+    server.starttls() # Start TLS encryption
 
     # Login to the SMTP server with your Gmail credentials
     server.login(email_config['sender_email'], 'vfaq igqq msrt usku')
@@ -35,20 +33,18 @@ def send_email(subject, body):
     # Close the SMTP connection
     server.quit()
 
-
-
 # Set up Kafka consumer configuration
 conf = {
-    'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
-    'group.id': 'python-consumer',
-    'auto.offset.reset': 'earliest'
+    'bootstrap.servers': 'localhost:9092', # Kafka broker(s)
+    'group.id': 'python-consumer', # Consumer group ID
+    'auto.offset.reset': 'earliest' # Start reading from the beginning of the topic if no offset is stored
 }
 
 # Create Kafka consumer instance
 consumer = Consumer(conf)
 
 # Subscribe to the topic
-topic = 'alarm_topic'  # Replace with your Kafka topic
+topic = 'alarm_topic' # Kafka topic
 consumer.subscribe([topic])
 
 # Continuously consume messages from Kafka and print them out
@@ -64,15 +60,10 @@ while True:
     # Parse the data
     data = msg.value().decode('utf-8')
     print("Send notification email to user")
-    
 
-    #send data
+    # send data
     subject = 'Notification'
-    body = json.dumps(data)  # Convert data to JSON string for email body
+    body = json.dumps(data) # Convert data to JSON string for email body
     send_email(subject, body)
 
 consumer.close()
-
-
-
-

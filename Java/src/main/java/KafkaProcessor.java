@@ -15,11 +15,13 @@ import java.util.Map;
 import java.util.Properties;
 
 public class KafkaProcessor {
+    // Initialize the moving average, exponential moving average, and RSI indicators
     private static final MovingAverage movingAverage = new MovingAverage(14);
     private static final ExponentialMovingAverage exponentialMovingAverage = new ExponentialMovingAverage(0.5); // alpha is 0.5
     private static final RSI rsi = new RSI(14);
     private static final Gson gson = new Gson();
     private static final Map<String, StockIndicators> indicatorsMap = new HashMap<>();
+
     public static void main(String[] args) {
         // Set up Kafka consumer configuration
         Properties consumerProps = new Properties();
@@ -35,11 +37,10 @@ public class KafkaProcessor {
         String topic = "validated_data";
         consumer.subscribe(Collections.singletonList(topic));
 
-        // Continuously consume messages from Kafka and print them out
+        // Continuously consume messages from Kafka and process them
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
-
                 // Parse the data
                 Map<String, Object> data = parseData(record.value());
 
@@ -77,10 +78,12 @@ public class KafkaProcessor {
     }
 
     static class StockIndicators {
+        // Initialize the moving average, exponential moving average, and RSI indicators for a stock
         private final MovingAverage movingAverage = new MovingAverage(14);
-        private final ExponentialMovingAverage exponentialMovingAverage = new ExponentialMovingAverage(0.5); // alpha is 0.5
+        private final ExponentialMovingAverage exponentialMovingAverage = new ExponentialMovingAverage(0.5);
         private final RSI rsi = new RSI(14);
 
+        // Getter methods for the indicators
         public MovingAverage getMovingAverage() {
             return movingAverage;
         }
@@ -94,17 +97,18 @@ public class KafkaProcessor {
         }
     }
 
-
-
+    // Function to parse JSON data
     private static Map<String, Object> parseData(String jsonData) {
         Type type = new TypeToken<Map<String, Object>>(){}.getType();
         return gson.fromJson(jsonData, type);
     }
 
+    // Function to convert a map to JSON
     private static String convertToJson(Map<String, Object> data) {
         return gson.toJson(data);
     }
 
+    // Function to forward data to Python via Kafka
     private static void forwardDataToPython(Map<String, Object> data) {
         // Set up Kafka producer configuration
         Properties producerProps = new Properties();
@@ -127,7 +131,7 @@ public class KafkaProcessor {
                 if(e != null) {
                     e.printStackTrace();
                 } else {
-                    System.out.println("Recive data and Forward it to Python file by kafka");
+                    System.out.println("Received data and forwarded it to Python file via Kafka");
                 }
             }
         });
