@@ -81,6 +81,38 @@ The `send_additional_data` function continuously generates and sends additional 
 
 The script uses the `psutil` library to set CPU affinity to the first core. This can help improve performance by ensuring that the script runs on a specific CPU core.
 
+### Data Ingestion Service (server.py)
+
+The data ingestion service is a Flask application that receives data from POST requests, validates the data, and forwards it to a Kafka topic. The data can be either financial data or additional data, and the validation checks are different for each type of data.
+
+The `ingest_data` function is the route handler for the `/ingest` endpoint. It gets the JSON data from the request, validates the data using the `validate_data` function, and if the data is valid, forwards it to Kafka using the `forward_data_to_kafka` function.
+
+The `validate_data` function checks if all required keys are present in the data and if their values are of the correct type. For financial data, it also checks if the opening price is less than the high price and the low price is greater than the closing price.
+
+The `forward_data_to_kafka` function sends the validated data to the Kafka topic 'validated_data'. If an error occurs while sending the data, it prints an error message.
+
+The Flask application runs on port 5000 and the Kafka producer connects to a Kafka broker running on localhost at port 9092.
+
+### Kafka Processor (KafkaProcessor.java)
+
+The Kafka processor is a Java application that consumes data from a Kafka topic, processes the data, and then produces the processed data to another Kafka topic.
+
+The `StockIndicators` class is a container for the three types of indicators that are being calculated for each stock: Moving Average (over 14 periods), Exponential Moving Average (with a smoothing factor of 0.5), and Relative Strength Index (RSI, over 14 periods). Each of these indicators is represented by an instance of a class (`MovingAverage`, `ExponentialMovingAverage`, `RSI`) that encapsulates the logic for calculating the respective indicator.
+
+The `parseData` function is a utility function that uses the Gson library to parse a JSON string into a `Map<String, Object>`. The `TypeToken` is used to specify the generic type for the map.
+
+The `convertToJson` function is another utility function that uses the Gson library to convert a `Map<String, Object>` into a JSON string.
+
+The `forwardDataToPython` function is responsible for sending the processed data to another Python application via Kafka. It creates a Kafka producer with the specified properties, defines the Kafka topic to which the data will be sent, converts the data to JSON, and sends it to the Kafka topic. If an error occurs while sending the data, it prints an error message. Finally, it closes the Kafka producer to release its resources.
+پ
+The `ExponentialMovingAverage` class in Java calculates the exponential moving average (EMA) of a series of numbers. The EMA is a type of moving average that gives more weight to recent data. The degree of weighting decrease is defined by the `alpha` parameter, also known as the smoothing factor.
+
+The `MovingAverage` class in Java calculates the moving average of a series of numbers. The moving average is the average of the most recent `n` numbers, where `n` is the period of the moving average.
+
+The `RSI` class in Java calculates the Relative Strength Index (RSI) of a series of closing prices. The RSI is a momentum oscillator used in technical analysis that measures the speed and change of price movements.
+
+
+
 
 
 
