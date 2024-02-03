@@ -1,4 +1,3 @@
-```markdown
 # Real-time Financial Data Analysis and Trading Signal Generation
 
 ## Table of Contents
@@ -36,6 +35,3 @@ The `addData` JavaScript file listens on port 5678 and implements it in the dash
 
 ## Getting Started <a name="getting-started"></a>
 Instructions for setting up your project locally. Steps for installation, software requirements, and how to run the system.
-
-
-```
