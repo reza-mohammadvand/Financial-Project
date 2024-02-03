@@ -4,10 +4,10 @@
 1. [Introduction](#introduction)
 2. [Objective](#objective)
 3. [Project Overview](#project-overview)
-4. [Technologies](#Technologies)
-4. [Challenges](#Challenges)
-5. [Implementation](#implementation)
-6. [Getting Started](#getting-started)
+4. [Technologies Used](#Technologies Used)
+5. [Challenges Faced](#Challenges Faced)
+6. [Implementation](#implementation)
+7. [Getting Started](#getting-started)
 
 
 ## Introduction <a name="introduction"></a>
@@ -28,7 +28,7 @@ The project involves the development of an architecture based on microservices a
 7. **Aggregator Service**: Summarizes the performance of each stock.
 8. **User Interface**: Allows users to interact with the system, view visualized data, and receive notifications.
 
-## Technologies Used <a name="Technologies"></a>
+## Technologies Used <a name="Technologies Used"></a>
 
 In this project, I used a variety of technologies to achieve my goals:
 
@@ -42,7 +42,7 @@ In this project, I used a variety of technologies to achieve my goals:
 
 5. **JavaScript**: I used JavaScript for updating the dashboard in real-time. It listens to the WebSocket and updates the dashboard whenever new data arrives.
 
-## Challenges Faced <a name="Challenges"></a>
+## Challenges Faced <a name="Challenges Faced"></a>
 
 During the development of this project, I faced several challenges:
 
@@ -59,7 +59,7 @@ During the development of this project, I faced several challenges:
 6. **Data Visualization**: Visualizing the processed data and signals in a user-friendly dashboard was also a challenge. The dashboard should be updated in real-time and should be easy to understand.
 
 
-## Implementation <a name="implementation"></a>
+## Implementation <a name="Implementation"></a>
 The `generator.py` file generates data about different stocks and news about different stocks. This data is sent to port 5000. Another file named `server` receives this data from port 5000 and after validating it, sends it through the Kafka server on port 9092 with the subject `validated_data`. A Java file takes this data and calculates 3 indicators for each share, which are `rsi`, `ema`, and `ma`. These indicators are calculated for each data received from each stock and added to that data. It then sends this data through Kafka with the `Processed_data` topic.
 
 A Python file named `signal_service` takes this data and issues a buy, sell, or neutral signal according to the added indicators. It also generates signals for stock news data according to the type and importance of purchases. After generating the signal, it adds it to the data and sends it via WebSocket on port 5678. If it is a buy or sell signal, it is sent via Kafka with `alarm_topic`. This data is received in the Python `notification` file and the program sends a signal alert email to a specified email address. 
