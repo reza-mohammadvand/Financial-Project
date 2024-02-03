@@ -7,7 +7,7 @@
 4. [Technologies Used](#technologies-used)
 5. [Challenges Faced](#challenges-faced)
 6. [Description of the Codes](#description-of-the-codes)
-7. [Project Implementation](#Project-Implementation)
+7. [Project Implementation](#project-implementation)
 
 ## Introduction <a name="introduction"></a>
 Welcome to our real-time financial data analysis project. In the fast-paced world of financial markets, quick and informed decision-making is crucial. This project is designed to provide real-time insights by analyzing simulated financial data and generating actionable trading signals. It uses distributed computing principles, microservices architecture, and stream processing to deliver these insights.
@@ -154,7 +154,7 @@ In this file, we listen to port 5678 and every time data arrives, we send it to 
 
 In this file, we create two types of charts using the Chart.js library. One chart is drawn for each share, and each chart has 5 price charts, moving average, exponential moving average, RSI, and volume for that share. Also, a function is created for when new data is received, which is used to update the chart. Additionally, a small chart is considered for each share, which is displayed on the main page and only shows the last 15 prices.
 
-## Project Implementation <a name="Project-Implementation"></a>
+## Project Implementation <a name="project-implementation"></a>
 
 To implement this project, follow these steps:
 
