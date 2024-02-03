@@ -4,8 +4,8 @@
 1. [Introduction](#introduction)
 2. [Objective](#objective)
 3. [Project Overview](#project-overview)
-4. [Technologies Used](#Technologies Used)
-5. [Challenges Faced](#Challenges Faced)
+4. [Technologies Used](#Technologies)
+5. [Challenges Faced](#Challenges)
 6. [Implementation](#implementation)
 7. [Getting Started](#getting-started)
 
@@ -28,7 +28,7 @@ The project involves the development of an architecture based on microservices a
 7. **Aggregator Service**: Summarizes the performance of each stock.
 8. **User Interface**: Allows users to interact with the system, view visualized data, and receive notifications.
 
-## Technologies Used <a name="Technologies Used"></a>
+## Technologies Used <a name="Technologies"></a>
 
 In this project, I used a variety of technologies to achieve my goals:
 
@@ -42,7 +42,7 @@ In this project, I used a variety of technologies to achieve my goals:
 
 5. **JavaScript**: I used JavaScript for updating the dashboard in real-time. It listens to the WebSocket and updates the dashboard whenever new data arrives.
 
-## Challenges Faced <a name="Challenges Faced"></a>
+## Challenges Faced <a name="Challenges"></a>
 
 During the development of this project, I faced several challenges:
 
