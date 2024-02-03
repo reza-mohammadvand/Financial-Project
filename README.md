@@ -1,42 +1,12 @@
 # Real-time Financial Data Analysis and Trading Signal Generation
-# Table of Contents
-
-1. Introduction
-2. Objective
-3. Project Overview
-4. Technologies Used
-5. Challenges Faced
-6. Description of the Codes
-7. Implementation
-
-## Introduction
-...
-
-## Objective
-...
-
-## Project Overview
-...
-
-## Technologies Used
-...
-
-## Challenges Faced
-...
-
-## Description of the Codes
-...
-
-## Implementation
-...
 
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Objective](#objective)
 3. [Project Overview](#project-overview)
-4. [Technologies Used](#Technologies)
-5. [Challenges Faced](#Challenges)
-6. [Description of the codes](#Description)
+4. [Technologies Used](#technologies-used)
+5. [Challenges Faced](#challenges-faced)
+6. [Description of the Codes](#description-of-the-codes)
 7. [Implementation](#implementation)
 
 
