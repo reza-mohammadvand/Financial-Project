@@ -11,7 +11,7 @@
 
 
 ## Introduction <a name="introduction"></a>
-This project is designed to build a scalable, distributed system that processes and analyzes simulated financial data in real-time to generate actionable trading signals. The system is developed using distributed computing principles, microservices architecture, and stream processing.
+Welcome to our real-time financial data analysis project. In the fast-paced world of financial markets, quick and informed decision-making is crucial. This project is designed to provide real-time insights by analyzing simulated financial data and generating actionable trading signals. It uses distributed computing principles, microservices architecture, and stream processing to deliver these insights.
 
 ## Objective <a name="objective"></a>
 The objective of this project is to work with simulated financial data, analyze various fields such as `stock_symbol`, `open_price`, etc., and generate actionable trading signals. The system consists of components for data acquisition, stream processing, signal generation, and data visualization that provide real-time financial insight.
@@ -161,8 +161,10 @@ To implement this project, follow these steps:
 
 1. **Install and run the Kafka server**: Navigate to the Kafka directory, open CMD there and run the Kafka server with these commands:
     ```
-    bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
-    bin\windows\kafka-server-start.bat .\config\server.properties
+    .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+    ```
+    ```
+    .\bin\windows\kafka-server-start.bat .\config\server.properties
     ```
 
 2. **Run generator.py**: This file generates data for us.
