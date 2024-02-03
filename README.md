@@ -4,8 +4,8 @@
 1. [Introduction](#introduction)
 2. [Objective](#objective)
 3. [Project Overview](#project-overview)
-4. [Implementation](#Technologies)
-4. [Implementation](#Challenges)
+4. [Technologies](#Technologies)
+4. [Challenges](#Challenges)
 5. [Implementation](#implementation)
 6. [Getting Started](#getting-started)
 
@@ -67,7 +67,7 @@ A Python file named `signal_service` takes this data and issues a buy, sell, or 
 The `addData` JavaScript file listens on port 5678 and implements it in the dashboard when data arrives. The data for each stock is put in separate charts in the dashboard and these charts are updated every time the data comes in. Also, generated signals are displayed on the web.
 Below you can see an overview of the project.
 
-# Data Generator (generator.py)
+### Data Generator (generator.py)
 
 The data generator is a Python script that simulates financial data and additional data for a randomly chosen stock. The script runs continuously, generating and sending data at random intervals between 1 and 5 seconds.
 
