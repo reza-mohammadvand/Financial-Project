@@ -32,6 +32,6 @@ The `generator.py` file generates data about different stocks and news about dif
 A Python file named `signal_service` takes this data and issues a buy, sell, or neutral signal according to the added indicators. It also generates signals for stock news data according to the type and importance of purchases. After generating the signal, it adds it to the data and sends it via WebSocket on port 5678. If it is a buy or sell signal, it is sent via Kafka with `alarm_topic`. This data is received in the Python `notification` file and the program sends a signal alert email to a specified email address. 
 
 The `addData` JavaScript file listens on port 5678 and implements it in the dashboard when data arrives. The data for each stock is put in separate charts in the dashboard and these charts are updated every time the data comes in. Also, generated signals are displayed on the web.
-
+https://github.com/reza-mohammadvand/Financial-Project/issues/1#issue-2116353789
 ## Getting Started <a name="getting-started"></a>
 Instructions for setting up your project locally. Steps for installation, software requirements, and how to run the system.
