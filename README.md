@@ -9,7 +9,6 @@
 6. [Description of the Codes](#description-of-the-codes)
 7. [Implementation](#implementation)
 
-
 ## Introduction <a name="introduction"></a>
 Welcome to our real-time financial data analysis project. In the fast-paced world of financial markets, quick and informed decision-making is crucial. This project is designed to provide real-time insights by analyzing simulated financial data and generating actionable trading signals. It uses distributed computing principles, microservices architecture, and stream processing to deliver these insights.
 
